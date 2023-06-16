@@ -1,5 +1,6 @@
 #include "global.h"
-#include "scene.h"
+#include "menu.h"
+#include "choose_scene.h"
 
 int Game_establish();
 void game_init();

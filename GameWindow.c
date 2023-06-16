@@ -1,7 +1,7 @@
 #include "GameWindow.h"
 
 bool draw = false;
-int window = 1;
+int window = 1; // 第幾個畫面
 const char *title = "どきどき戀愛冒險";
 
 // ALLEGRO Variables
@@ -59,7 +59,7 @@ void game_init() {
 
 void game_begin() {
     // Load sound
-    song = al_load_sample("./sound/hello.wav");
+    //song = al_load_sample("./sound/hello.wav");
     al_reserve_samples(20);
     sample_instance = al_create_sample_instance(song);
     // Loop the song until the display closes
@@ -78,11 +78,15 @@ void game_update(){
     if( judge_next_window ){
         if( window == 1 ){
             menu_destroy();
-            game_scene_init();
+            choose_scene_init();
             judge_next_window = false;
             window = 2;
-        }
-        if( window == 2 ){
+        } else if( window == 2 ){
+            choose_scene_destroy();
+            // next scene init
+            judge_next_window = false;
+            window = 3;
+       } else if( window == 3 ){
             // todo
        }
     }
@@ -96,7 +100,7 @@ int process_event(){
     if( window == 1 ){
         menu_process(event);
     }else if( window == 2 ){
-        
+        //choose_scene_process(event);
     }
 
     // Shutdown our program
@@ -109,11 +113,14 @@ int process_event(){
     return 0;
 }
 
+// 畫出每一格畫面
 void game_draw(){
-    if( window == 1 ){
+    if (window == 1) {
         menu_draw();
-    }else if( window == 2 ){
-        game_scene_draw();
+    } else if (window == 2) {
+        choose_scene_draw();
+    } else if (window == 3) {
+        // next scene draw
     }
     al_flip_display();
 }
@@ -134,5 +141,4 @@ void game_destroy() {
     // Make sure you destroy all things
     al_destroy_event_queue(event_queue);
     al_destroy_display(display);
-    game_scene_destroy();
 }
