@@ -2,12 +2,11 @@
 
 bool draw = false;
 int window = 1;
-
 const char *title = "どきどき戀愛冒險";
 
 // ALLEGRO Variables
-ALLEGRO_DISPLAY* display = NULL;
-ALLEGRO_SAMPLE *song=NULL;
+ALLEGRO_DISPLAY *display = NULL;
+ALLEGRO_SAMPLE *song = NULL;
 ALLEGRO_SAMPLE_INSTANCE *sample_instance;
 
 int Game_establish() {
@@ -33,7 +32,7 @@ void game_init() {
     al_install_audio();
     al_init_acodec_addon();
   
-    display = al_create_display(3030, 1710);//螢幕視窗大小
+    display = al_create_display(WIDTH, HEIGHT);//螢幕視窗大小
     // create event queue
     event_queue = al_create_event_queue();
     // Initialize Allegro settings
@@ -73,23 +72,22 @@ void game_begin() {
     al_start_timer(fps);
     // initialize the menu before entering the loop
     menu_init();
-
 }
+
 void game_update(){
     if( judge_next_window ){
         if( window == 1 ){
-            // not back menu anymore, therefore destroy it
             menu_destroy();
-            // initialize next scene
             game_scene_init();
             judge_next_window = false;
             window = 2;
         }
-    }
-    if( window == 2 ){
-        charater_update();
+        if( window == 2 ){
+            // todo
+       }
     }
 }
+
 int process_event(){
     // Request the event
     ALLEGRO_EVENT event;
@@ -98,7 +96,7 @@ int process_event(){
     if( window == 1 ){
         menu_process(event);
     }else if( window == 2 ){
-        charater_process(event);
+        
     }
 
     // Shutdown our program
@@ -110,6 +108,7 @@ int process_event(){
     if(draw) game_update();
     return 0;
 }
+
 void game_draw(){
     if( window == 1 ){
         menu_draw();
@@ -118,6 +117,7 @@ void game_draw(){
     }
     al_flip_display();
 }
+
 int game_run() {
     int error = 0;
     if( draw ){
