@@ -1,6 +1,5 @@
 #include "choose_scene.h"
 
-
 void choose_scene_init() {
 
 }

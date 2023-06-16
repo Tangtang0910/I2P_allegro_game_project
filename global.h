@@ -2,6 +2,7 @@
 #define GLOBAL_H_INCLUDED
 #define GAME_TERMINATE -1
 #include <stdio.h>
+#include <math.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>

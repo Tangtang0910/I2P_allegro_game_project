@@ -100,7 +100,7 @@ int process_event(){
     if( window == 1 ){
         menu_process(event);
     }else if( window == 2 ){
-        //choose_scene_process(event);
+        choose_scene_process(event);
     }
 
     // Shutdown our program
