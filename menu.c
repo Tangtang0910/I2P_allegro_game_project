@@ -134,4 +134,5 @@ void menu_destroy(){
     for (int i = 0; i < sakura_image_count; i++) {
         al_destroy_bitmap(menu_sakura_images[i]);
     }
+    al_destroy_sample_instance(hoverSound);
 }

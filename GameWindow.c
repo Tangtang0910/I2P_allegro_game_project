@@ -14,7 +14,7 @@ int Game_establish() {
 
     game_init();
     game_begin();
-
+    choose_scene_init();
     while ( msg != GAME_TERMINATE ) {
         msg = game_run();
         if ( msg == GAME_TERMINATE )
