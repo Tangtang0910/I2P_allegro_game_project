@@ -1,5 +1,5 @@
 #include "menu.h" 
-
+bool is_button_hovered = true;
 int menu_button_counter = 0, menu_button_sign = 1;
 double menu_button_size = 1.5;
 bool menu_inside_button = false;
@@ -8,10 +8,11 @@ int press_here_counter = 0, start_counter = 0;
 ALLEGRO_BITMAP *menu_title_image = 0;
 ALLEGRO_FONT *menu_big_font = NULL, *menu_small_font = NULL;
 ALLEGRO_BITMAP *menu_background = NULL;
+ALLEGRO_SAMPLE_INSTANCE* hoverSound;
 
 // function of menu
 void menu_init(){
-    //方便做回車鍵
+    // 方便做回車鍵
     menu_button_size = 1.5;
     menu_button_sign = 1;
     menu_button_counter = 0;
@@ -22,6 +23,13 @@ void menu_init(){
 
     al_init_image_addon();
     al_init_primitives_addon();
+    al_init_acodec_addon();
+    ALLEGRO_SAMPLE* sample = al_load_sample("sound/mixkit-bubbly-achievement-tone-3193.wav");
+    hoverSound = al_create_sample_instance(sample);
+    al_set_sample_instance_playmode(hoverSound, ALLEGRO_PLAYMODE_ONCE);
+    al_set_sample_instance_gain(hoverSound, 0.01);
+    al_attach_sample_instance_to_mixer(hoverSound, al_get_default_mixer());
+
 
     ALLEGRO_BITMAP* originalBackground = al_load_bitmap("./image/ini_background.png");
     menu_background = al_create_bitmap(WIDTH, HEIGHT);
@@ -35,27 +43,40 @@ void menu_init(){
     menu_small_font = al_load_ttf_font("./font/pirulen.ttf", HEIGHT/35, 0);
 }
 
-void menu_process(ALLEGRO_EVENT event){
-    if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-        // 鼠標移動事件
-        int mouse_x = event.mouse.x;
-        int mouse_y = event.mouse.y;
+void menu_process(ALLEGRO_EVENT event) {
+if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+// 鼠標移動事件
+int mouse_x = event.mouse.x;
+int mouse_y = event.mouse.y;
+    bool is_button_hovered = false;
 
-        if((mouse_x >= WIDTH/3 && mouse_x <= WIDTH*2/3) && (mouse_y >= HEIGHT*3/5 && mouse_y <= HEIGHT*4/5)){
-            menu_inside_button = true;
-        } else {
-            menu_inside_button = false;
-        }
+    if ((mouse_x >= WIDTH / 3 && mouse_x <= WIDTH * 2 / 3) && (mouse_y >= HEIGHT * 3 / 5 && mouse_y <= HEIGHT * 4 / 5)) {
+        is_button_hovered = true;
     }
-    else if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-        // 鼠標按下事件
-        int mouse_x = event.mouse.x;
-        int mouse_y = event.mouse.y;
-        
-        if((mouse_x >= WIDTH/3 && mouse_x <= WIDTH*2/3) && (mouse_y >= HEIGHT*3/5 && mouse_y <= HEIGHT*4/5)){
-            judge_next_window = true;
-        }
+
+    if (is_button_hovered && !menu_inside_button) {
+        // 滑鼠進入按鈕區域且按鈕狀態為未懸停
+        ALLEGRO_SAMPLE* sample = al_load_sample("sound/mixkit-bubbly-achievement-tone-3193.wav");
+        ALLEGRO_SAMPLE_INSTANCE* hoverSound = al_create_sample_instance(sample);
+        al_set_sample_instance_playmode(hoverSound, ALLEGRO_PLAYMODE_ONCE);
+        al_set_sample_instance_gain(hoverSound, 1);
+        al_attach_sample_instance_to_mixer(hoverSound, al_get_default_mixer());
+        al_play_sample_instance(hoverSound);
+
+        menu_inside_button = true;
+    } else if (!is_button_hovered) {
+        // 滑鼠離開按鈕區域
+        menu_inside_button = false;
     }
+} else if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+    // 鼠標按下事件
+    int mouse_x = event.mouse.x;
+    int mouse_y = event.mouse.y;
+
+    if ((mouse_x >= WIDTH / 3 && mouse_x <= WIDTH * 2 / 3) && (mouse_y >= HEIGHT * 3 / 5 && mouse_y <= HEIGHT * 4 / 5)) {
+        judge_next_window = true;
+    }
+}
 }
 
 void draw_rounded_rectangle(float x1, float y1, float x2, float y2, float r, ALLEGRO_COLOR color, float thickness) {
