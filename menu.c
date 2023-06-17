@@ -1,26 +1,38 @@
 #include "menu.h" 
 
-double rec_size = 1.5, sign = 1, count = 0;
-bool in_button = false;
-ALLEGRO_BITMAP *title_img = 0;
-ALLEGRO_FONT *font = NULL, *bigFont = NULL, *smallFont = NULL;
-ALLEGRO_BITMAP *background = NULL;
+int menu_button_counter = 0, menu_button_sign = 1;
+double menu_button_size = 1.5;
+bool menu_inside_button = false;
+
+int press_here_counter = 0, start_counter = 0;
+ALLEGRO_BITMAP *menu_title_image = 0;
+ALLEGRO_FONT *menu_big_font = NULL, *menu_small_font = NULL;
+ALLEGRO_BITMAP *menu_background = NULL;
 
 // function of menu
 void menu_init(){
+    //方便做回車鍵
+    menu_button_size = 1.5;
+    menu_button_sign = 1;
+    menu_button_counter = 0;
+    menu_inside_button = false;
+
+    press_here_counter = 0;
+    start_counter = 0;
+
     al_init_image_addon();
     al_init_primitives_addon();
 
     ALLEGRO_BITMAP* originalBackground = al_load_bitmap("./image/ini_background.png");
-    background = al_create_bitmap(WIDTH, HEIGHT);
-    al_set_target_bitmap(background);
+    menu_background = al_create_bitmap(WIDTH, HEIGHT);
+    al_set_target_bitmap(menu_background);
     al_draw_scaled_bitmap(originalBackground, 0, 0, al_get_bitmap_width(originalBackground), al_get_bitmap_height(originalBackground), 0, 0, WIDTH, HEIGHT, 0);
     al_set_target_backbuffer(al_get_current_display());
     al_destroy_bitmap(originalBackground);
-    title_img = al_load_bitmap("./image/ttl.png");
 
-    bigFont = al_load_ttf_font("./font/pirulen.ttf", HEIGHT/10, 0);
-    smallFont = al_load_ttf_font("./font/pirulen.ttf", HEIGHT/35, 0);
+    menu_title_image = al_load_bitmap("./image/ttl.png");
+    menu_big_font = al_load_ttf_font("./font/pirulen.ttf", HEIGHT/10, 0);
+    menu_small_font = al_load_ttf_font("./font/pirulen.ttf", HEIGHT/35, 0);
 }
 
 void menu_process(ALLEGRO_EVENT event){
@@ -30,9 +42,9 @@ void menu_process(ALLEGRO_EVENT event){
         int mouse_y = event.mouse.y;
 
         if((mouse_x >= WIDTH/3 && mouse_x <= WIDTH*2/3) && (mouse_y >= HEIGHT*3/5 && mouse_y <= HEIGHT*4/5)){
-            in_button = true;
+            menu_inside_button = true;
         } else {
-            in_button = false;
+            menu_inside_button = false;
         }
     }
     else if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
@@ -61,33 +73,31 @@ void draw_rounded_rectangle(float x1, float y1, float x2, float y2, float r, ALL
 }
 
 void menu_draw(){
-    al_draw_bitmap(background, 0, 0, 0);
+    al_draw_bitmap(menu_background, 0, 0, 0);
 
-    al_draw_bitmap(title_img, WIDTH/5, HEIGHT/5, 0);
+    al_draw_bitmap(menu_title_image, WIDTH/5, HEIGHT/5, 0);
 
-    if (count == 50) {
-        count = 0;
-        sign = -sign;
+    if (menu_button_counter == 50) {
+        menu_button_counter = 0;
+        menu_button_sign = -menu_button_sign;
     }
-    count++;
-    rec_size += sign * 0.4 * sin(count * 3.14 / 100);
+    menu_button_size += menu_button_sign * 0.4 * sin(menu_button_counter++ * 3.14 / 100);
 
-    if(in_button == false){
-        draw_rounded_rectangle(WIDTH/3, HEIGHT*3/5, WIDTH*2/3, HEIGHT*4/5, 20, al_map_rgb(51,76,97), rec_size);
-        font = smallFont;
-        al_draw_text(font, al_map_rgb(51,76,97), WIDTH/2, HEIGHT*7.5/11 , ALLEGRO_ALIGN_CENTRE, "Press HERE to start");
+    if(!menu_inside_button){
+        draw_rounded_rectangle(WIDTH/3, HEIGHT*3/5, WIDTH*2/3, HEIGHT*4/5, 20, al_map_rgb(51,76,97), menu_button_size);
+        al_draw_text(menu_small_font, al_map_rgb(51,76,97), WIDTH/2, HEIGHT*7.5/11 , ALLEGRO_ALIGN_CENTRE, "Press HERE to start");
+        //typemachine(0.5, "Press here to start!", menu_small_font, WIDTH/2, HEIGHT*7/11, &press_here_counter);
     }
     else{
-        draw_rounded_rectangle(WIDTH/3, HEIGHT*3/5, WIDTH*2/3, HEIGHT*4/5, 20, al_map_rgb(240,121,161), rec_size+20);
-        font = bigFont;
-        al_draw_text(font, al_map_rgb(240,121,161), WIDTH/2, HEIGHT*7/11 , ALLEGRO_ALIGN_CENTRE, "start!");
-
-        
+        draw_rounded_rectangle(WIDTH/3, HEIGHT*3/5, WIDTH*2/3, HEIGHT*4/5, 20, al_map_rgb(240,121,161), menu_button_size+20);
+        al_draw_text(menu_big_font, al_map_rgb(240,121,161), WIDTH/2, HEIGHT*7/11 , ALLEGRO_ALIGN_CENTRE, "start!");
+        //typemachine(0.1, "start!", menu_big_font, WIDTH/2, HEIGHT*7/11, &start_counter);
     }
 }
 
 void menu_destroy(){
-    al_destroy_font(font);
-    al_destroy_bitmap(background);
-    al_destroy_bitmap(title_img);
+    al_destroy_font(menu_big_font);
+    al_destroy_font(menu_small_font);
+    al_destroy_bitmap(menu_background);
+    al_destroy_bitmap(menu_title_image);
 }

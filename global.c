@@ -8,3 +8,4 @@ ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *fps = NULL;
 bool key_state[ALLEGRO_KEY_MAX] = {false};
 bool judge_next_window = false;
+bool isFirstDraw = true ;
