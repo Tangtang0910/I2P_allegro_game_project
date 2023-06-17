@@ -22,5 +22,6 @@ extern ALLEGRO_EVENT_QUEUE *event_queue;
 extern ALLEGRO_TIMER *fps;
 extern char choose_scene_name_input[100];
 extern bool isFirstDraw ;
+extern int charator_gender;
 
 #endif

@@ -1,6 +1,7 @@
 #include "global.h"
 #include "menu.h"
 #include "choose_scene.h"
+#include "classroom_scene.h"
 
 int Game_establish();
 void game_init();

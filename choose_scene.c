@@ -8,12 +8,20 @@ ALLEGRO_BITMAP *male_symbo_image = NULL;
 ALLEGRO_BITMAP *female_symbo_image = NULL;
 
 int choose_scene_time_counter = 0;
+bool choose_scene_inside_button = false;
+bool choose_gender_circle_fix = false;
+int mouse_boy_circle_distance = 0;
+int mouse_girl_circle_distance = 0;
 
 void choose_scene_init() {
     int choose_scene_time_counter = 0;
+    bool choose_scene_inside_button = false;
+    bool choose_gender_circle_fix = false;
+    int mouse_boy_circle_distance = 0;
+    int mouse_girl_circle_distance = 0;
 
-    male_symbo_image = al_load_bitmap("./image/male.jpeg");
-    female_symbo_image = al_load_bitmap("./image/female.jpeg");
+    male_symbo_image = al_load_bitmap("./image/boy.png");
+    female_symbo_image = al_load_bitmap("./image/girl.png");
 
     al_init_image_addon();
     al_init_primitives_addon();
@@ -26,6 +34,8 @@ void choose_scene_init() {
 }
 
 void choose_scene_process(ALLEGRO_EVENT event) {
+
+
     if(event.type == ALLEGRO_EVENT_KEY_CHAR){
         char keycode = event.keyboard.unichar;
         if(keycode >= 32 && keycode <= 126) {
@@ -35,12 +45,52 @@ void choose_scene_process(ALLEGRO_EVENT event) {
                 choose_scene_name_input[len + 1] = '\0';
             }
         }
-    } else if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+    }
+    else if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+        
+
         if(event.keyboard.keycode == ALLEGRO_KEY_BACKSPACE) { // handle backspace
             int len = strlen(choose_scene_name_input);
             if(len > 0) { 
                 choose_scene_name_input[len - 1] = '\0';
             }
+        }
+    }
+
+    int mouse_x = event.mouse.x;
+    int mouse_y = event.mouse.y;
+    mouse_boy_circle_distance = (mouse_x-WIDTH*1.23/3)*(mouse_x-WIDTH*1.23/3) + (mouse_y-HEIGHT*2.32/5)*(mouse_y-HEIGHT*2.32/5);
+    mouse_girl_circle_distance = (mouse_x-WIDTH*1.72/3)*(mouse_x-WIDTH*1.72/3) + (mouse_y-HEIGHT*2.32/5)*(mouse_y-HEIGHT*2.32/5);
+    
+    if (event.type == ALLEGRO_EVENT_MOUSE_AXES && !choose_gender_circle_fix) {
+    // 鼠標移動事件
+        if (mouse_girl_circle_distance <= 150*150) {
+            charator_gender = 0;//女
+        }
+        else if (mouse_boy_circle_distance <= 150*150){
+            charator_gender = 1;//男
+        }
+        else{
+            charator_gender = 2;
+        }
+    } 
+    else if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+        // 鼠標按下事件
+        if ((mouse_x-WIDTH*1.72/3)*(mouse_x-WIDTH*1.72/3) + (mouse_y-HEIGHT*2.32/5)*(mouse_y-HEIGHT*2.32/5) <= 150*150) {
+            choose_scene_inside_button = true;
+            choose_gender_circle_fix = false;
+            charator_gender = 0;//女
+        }
+        else if ((mouse_x-WIDTH*1.23/3)*(mouse_x-WIDTH*1.23/3) + (mouse_y-HEIGHT*2.32/5)*(mouse_y-HEIGHT*2.32/5) <= 150*150){
+            choose_scene_inside_button = true;
+            choose_gender_circle_fix = false;
+            charator_gender = 1;//男
+        }
+    }
+
+    if(event.type == ALLEGRO_EVENT_KEY_UP){
+        if(event.keyboard.keycode == ALLEGRO_KEY_ENTER){
+            judge_next_window = true;
         }
     }
 }
@@ -51,8 +101,28 @@ void choose_scene_draw() {
 
     al_clear_to_color(al_map_rgb(248,163,192));
 
-    al_draw_bitmap(male_symbo_image, 0, 0, 0);
-    al_draw_bitmap(female_symbo_image, 0, 0, 0);
+    al_draw_filled_circle(WIDTH*1.72/3, HEIGHT*2.32/5, 150, al_map_rgb(196,146,227));
+    al_draw_filled_circle(WIDTH*1.23/3, HEIGHT*2.32/5, 150, al_map_rgb(157,220,235));
+    if(charator_gender == 0){
+        al_draw_circle(WIDTH*1.72/3, HEIGHT*2.32/5, 155, al_map_rgb(255, 255, 255), 20);
+        if(choose_scene_inside_button){
+            choose_gender_circle_fix = true;
+        }
+    }
+    else if(charator_gender == 1){
+        al_draw_circle(WIDTH*1.23/3, HEIGHT*2.32/5, 155, al_map_rgb(255, 255, 255), 20);
+        if(choose_scene_inside_button){
+            choose_gender_circle_fix = true;
+        }
+    }
+
+    float scale = 0.4f; // change this value to what you want
+    int w = al_get_bitmap_width(male_symbo_image);// get the width and height of the bitmap
+    int h = al_get_bitmap_height(male_symbo_image);
+    al_draw_scaled_bitmap(male_symbo_image, 0, 0, w, h, WIDTH*1.1/3, HEIGHT*2/5, w*scale, h*scale, 0);// Draw the scaled bitmap
+    w = al_get_bitmap_width(female_symbo_image);
+    h = al_get_bitmap_height(female_symbo_image);
+    al_draw_scaled_bitmap(female_symbo_image, 0, 0, w, h, WIDTH*1.6/3, HEIGHT*1.95/5, w*scale, h*scale, 0);
 
     al_draw_text(choose_scene_JP_font, al_map_rgb(0,0,0), WIDTH*1.35/3, HEIGHT*3.7/6, ALLEGRO_ALIGN_LEFT, "君の名は。");
 
@@ -73,9 +143,6 @@ void choose_scene_draw() {
     else{
         al_draw_text(choose_scene_name_font, al_map_rgb(0,0,0), WIDTH*2/5, HEIGHT*6.7/10, ALLEGRO_ALIGN_LEFT, choose_scene_name_input);
     }
-
-    al_draw_filled_circle(WIDTH/2, HEIGHT/3, 50, al_map_rgb(196,146,227));
-    
 }  
 
 void choose_scene_destroy() {

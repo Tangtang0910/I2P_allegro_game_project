@@ -11,3 +11,4 @@ bool judge_next_window = false;
 bool isFirstDraw = true ;
 
 char choose_scene_name_input[100] = {0};//使用者名字
+int charator_gender = 2;//使用者性別

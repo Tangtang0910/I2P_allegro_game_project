@@ -14,7 +14,7 @@ int Game_establish() {
 
     game_init();
     game_begin();
-    choose_scene_init();
+    //choose_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
     while ( msg != GAME_TERMINATE ) {
         msg = game_run();
         if ( msg == GAME_TERMINATE )
@@ -81,12 +81,17 @@ void game_update(){
             choose_scene_init();
             judge_next_window = false;
             window = 2;
-        } else if( window == 2 ){
+        } else if( window == 2 ) {
             choose_scene_destroy();
-            // next scene init
+            classroom_scene_init();
             judge_next_window = false;
             window = 3;
-       } else if( window == 3 ){
+       } else if( window == 3 ) {
+            classroom_scene_destroy();
+            // next scene init
+            judge_next_window = false;
+            window = 4;
+       } else if (window == 4) {
             // todo
        }
     }
@@ -101,6 +106,10 @@ int process_event(){
         menu_process(event);
     }else if( window == 2 ){
         choose_scene_process(event);
+    }else if( window == 3 ){
+        classroom_scene_process(event);
+    }else if( window == 4 ){
+        //choose_scene_process(event);
     }
 
     // Shutdown our program
@@ -120,6 +129,8 @@ void game_draw(){
     } else if (window == 2) {
         choose_scene_draw();
     } else if (window == 3) {
+        classroom_scene_draw();
+    } else if (window == 4) {
         // next scene draw
     }
     al_flip_display();
