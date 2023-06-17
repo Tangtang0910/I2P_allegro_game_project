@@ -85,13 +85,11 @@ void menu_draw(){
 
     if(!menu_inside_button){
         draw_rounded_rectangle(WIDTH/3, HEIGHT*3/5, WIDTH*2/3, HEIGHT*4/5, 20, al_map_rgb(51,76,97), menu_button_size);
-        al_draw_text(menu_small_font, al_map_rgb(51,76,97), WIDTH/2, HEIGHT*7.5/11 , ALLEGRO_ALIGN_CENTRE, "Press HERE to start");
-        //typemachine(0.5, "Press here to start!", menu_small_font, WIDTH/2, HEIGHT*7/11, &press_here_counter);
+        typemachine(0.2, "Press here to start!", menu_small_font, al_map_rgb(51,76,97), WIDTH*1.85/5, HEIGHT*7.5/11, &press_here_counter);
     }
     else{
         draw_rounded_rectangle(WIDTH/3, HEIGHT*3/5, WIDTH*2/3, HEIGHT*4/5, 20, al_map_rgb(240,121,161), menu_button_size+20);
-        al_draw_text(menu_big_font, al_map_rgb(240,121,161), WIDTH/2, HEIGHT*7/11 , ALLEGRO_ALIGN_CENTRE, "start!");
-        //typemachine(0.1, "start!", menu_big_font, WIDTH/2, HEIGHT*7/11, &start_counter);
+        typemachine(0.2, "start!", menu_big_font, al_map_rgb(240,121,161), WIDTH*1.85/5, HEIGHT*7/11, &start_counter);
     }
 }
 

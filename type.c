@@ -1,18 +1,16 @@
 #include "type.h"
 
-void typemachine(double typing_speed ,const  char* text ,const ALLEGRO_FONT *type_font, int x, int y, int *counter) {
-    int len = strlen(text);
-    if (isFirstDraw) {
-        for (int i = 0; i < len; i++) {
-            char current_char[2] = { text[i], '\0' };
-            al_draw_text(type_font, al_map_rgb(0, 0, 0), x, y, ALLEGRO_ALIGN_LEFT, current_char);
-            al_flip_display();
-            al_rest(typing_speed);
-            x += al_get_text_width(type_font, current_char);
-            printf("%s\n", current_char);
-        }
-        isFirstDraw = false;
+void typemachine(double typing_speed , const char* text , ALLEGRO_FONT *type_font, ALLEGRO_COLOR type_color, int x, int y, int *counter_ptr) {
+    int total_len = strlen(text), word_len = (double)(*counter_ptr) / FPS / typing_speed;
+    if (word_len >= total_len) {
+        al_draw_text(type_font, type_color, x, y, ALLEGRO_ALIGN_LEFT, text);
     } else {
-        al_draw_text(type_font, al_map_rgb(0, 0, 0), x, y, ALLEGRO_ALIGN_LEFT, text);
-    }
+        char* result;
+        result = malloc(word_len + 1);
+        strncpy(result, text, word_len);
+        result[word_len] = '\0';
+        printf("%d %s\n", word_len, result);
+        al_draw_text(type_font, type_color, x, y, ALLEGRO_ALIGN_LEFT, result);
+    } 
+    (*counter_ptr)++;
 }
