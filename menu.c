@@ -116,13 +116,14 @@ void menu_draw(){
     }
     menu_button_size += menu_button_sign * 0.4 * sin(menu_button_counter++ * 3.14 / 100);
 
-    if(!menu_inside_button){
+    if (!menu_inside_button) {
         draw_rounded_rectangle(WIDTH/3, HEIGHT*3/5, WIDTH*2/3, HEIGHT*4/5, 20, al_map_rgb(51,76,97), menu_button_size);
-        typemachine(0.2, "Press here to start!", menu_small_font, al_map_rgb(51,76,97), WIDTH*1.85/5, HEIGHT*7.5/11, &press_here_counter);
-    }
-    else{
+        typemachine(0.1, "Press here to start!", menu_small_font, al_map_rgb(51,76,97), WIDTH*1.85/5, HEIGHT*7.5/11, &press_here_counter);
+        start_counter = 0;
+    } else {
         draw_rounded_rectangle(WIDTH/3, HEIGHT*3/5, WIDTH*2/3, HEIGHT*4/5, 20, al_map_rgb(240,121,161), menu_button_size+20);
         typemachine(0.2, "start!", menu_big_font, al_map_rgb(240,121,161), WIDTH*1.85/5, HEIGHT*7/11, &start_counter);
+        press_here_counter = 0;
     }
 }
 
