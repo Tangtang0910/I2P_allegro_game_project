@@ -9,3 +9,5 @@ ALLEGRO_TIMER *fps = NULL;
 bool key_state[ALLEGRO_KEY_MAX] = {false};
 bool judge_next_window = false;
 bool isFirstDraw = true ;
+
+char choose_scene_name_input[100] = {0};//使用者名字

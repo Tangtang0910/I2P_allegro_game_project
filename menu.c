@@ -38,8 +38,8 @@ void menu_init(){
     al_destroy_bitmap(originalBackground);
 
     menu_title_image = al_load_bitmap("./image/ttl.png");
-    menu_big_font = al_load_ttf_font("./font/pirulen.ttf", HEIGHT/10, 0);
-    menu_small_font = al_load_ttf_font("./font/pirulen.ttf", HEIGHT/35, 0);
+    menu_big_font = al_load_ttf_font("./font/pirulen_EN.ttf", HEIGHT/10, 0);
+    menu_small_font = al_load_ttf_font("./font/pirulen_EN.ttf", HEIGHT/35, 0);
 
     for (int i = 0; i < sakura_image_count; i++) {
         char image_path[100];
