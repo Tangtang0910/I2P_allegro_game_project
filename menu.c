@@ -9,7 +9,8 @@ int press_here_counter = 0, start_counter = 0, sakura_image_count = 243, sakura_
 ALLEGRO_BITMAP *menu_title_image = 0;
 ALLEGRO_FONT *menu_big_font = NULL, *menu_small_font = NULL;
 ALLEGRO_BITMAP *menu_background = NULL, *menu_sakura_images[243];
-ALLEGRO_SAMPLE_INSTANCE* hoverSound;
+ALLEGRO_SAMPLE *start_sample, *menu_music_sample;
+ALLEGRO_SAMPLE_INSTANCE *start_sample_instance, *menu_music_sample_instance;
 
 // function of menu
 void menu_init(){
@@ -25,11 +26,19 @@ void menu_init(){
     al_init_image_addon();
     al_init_primitives_addon();
     al_init_acodec_addon();
-    ALLEGRO_SAMPLE* sample = al_load_sample("sound/mixkit-bubbly-achievement-tone-3193.wav");
-    hoverSound = al_create_sample_instance(sample);
-    al_set_sample_instance_playmode(hoverSound, ALLEGRO_PLAYMODE_ONCE);
-    al_set_sample_instance_gain(hoverSound, 0.01);
-    al_attach_sample_instance_to_mixer(hoverSound, al_get_default_mixer());
+
+    start_sample = al_load_sample("./sound/game_start.wav");
+    start_sample_instance = al_create_sample_instance(start_sample);
+    al_set_sample_instance_playmode(start_sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_set_sample_instance_gain(start_sample_instance, 0.3);
+    al_attach_sample_instance_to_mixer(start_sample_instance, al_get_default_mixer());
+
+    menu_music_sample = al_load_sample("./sound/menu_music.wav");
+    menu_music_sample_instance = al_create_sample_instance(menu_music_sample);
+    al_set_sample_instance_playmode(menu_music_sample_instance, ALLEGRO_PLAYMODE_LOOP);
+    al_set_sample_instance_gain(menu_music_sample_instance, 0.3);
+    al_attach_sample_instance_to_mixer(menu_music_sample_instance, al_get_default_mixer());
+    al_play_sample_instance(menu_music_sample_instance);
 
     ALLEGRO_BITMAP* originalBackground = al_load_bitmap("./image/ini_background.png");
     menu_background = al_create_bitmap(WIDTH, HEIGHT);
@@ -66,13 +75,7 @@ void menu_process(ALLEGRO_EVENT event) {
 
         if (is_button_hovered && !menu_inside_button) {
             // 滑鼠進入按鈕區域且按鈕狀態為未懸停
-            ALLEGRO_SAMPLE* sample = al_load_sample("sound/mixkit-bubbly-achievement-tone-3193.wav");
-            ALLEGRO_SAMPLE_INSTANCE* hoverSound = al_create_sample_instance(sample);
-            al_set_sample_instance_playmode(hoverSound, ALLEGRO_PLAYMODE_ONCE);
-            al_set_sample_instance_gain(hoverSound, 1);
-            al_attach_sample_instance_to_mixer(hoverSound, al_get_default_mixer());
-            al_play_sample_instance(hoverSound);
-
+            al_play_sample_instance(start_sample_instance);
             menu_inside_button = true;
         } else if (!is_button_hovered) {
             // 滑鼠離開按鈕區域
@@ -136,5 +139,8 @@ void menu_destroy(){
     for (int i = 0; i < sakura_image_count; i++) {
         al_destroy_bitmap(menu_sakura_images[i]);
     }
-    al_destroy_sample_instance(hoverSound);
+    al_destroy_sample(start_sample);
+    al_destroy_sample_instance(start_sample_instance);
+    al_destroy_sample(menu_music_sample);
+    al_destroy_sample_instance(menu_music_sample_instance);
 }
