@@ -9,7 +9,6 @@ void typemachine(double typing_speed , const char* text , ALLEGRO_FONT *type_fon
         result = malloc(word_len + 1);
         strncpy(result, text, word_len);
         result[word_len] = '\0';
-        printf("%d %s\n", word_len, result);
         al_draw_text(type_font, type_color, x, y, ALLEGRO_ALIGN_LEFT, result);
     } 
     (*counter_ptr)++;
