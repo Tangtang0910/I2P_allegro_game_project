@@ -36,6 +36,7 @@ void classroom_scene_init() {
     classroom_dialogue_index = 0;
     classroom_dialogue_counter = 0;
     classroom_background_option = 1;
+    favor[0][0] = favor[0][1] = favor[0][2] = 0;
     
     al_init_image_addon();
     al_init_font_addon();
@@ -78,6 +79,7 @@ void classroom_scene_process(ALLEGRO_EVENT event) {
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2) {
             classroom_dialogue_index++;
             classroom_dialogue_counter = 0; 
+            favor[0][0]--;
         }
     } else if (classroom_dialogue_index == 9 && event.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (event.keyboard.keycode == ALLEGRO_KEY_1) {
@@ -86,6 +88,7 @@ void classroom_scene_process(ALLEGRO_EVENT event) {
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2) {
             classroom_dialogue_index = 14;
             classroom_dialogue_counter = 0;  
+            favor[0][1]--;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_3) {
             classroom_dialogue_counter = 0;
         }
@@ -93,20 +96,25 @@ void classroom_scene_process(ALLEGRO_EVENT event) {
         if (event.keyboard.keycode == ALLEGRO_KEY_1) {
             classroom_dialogue_index++;
             classroom_dialogue_counter = 0;
+            favor[0][1]++;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2) {
             classroom_dialogue_index += 2;
             classroom_dialogue_counter = 0;
+            favor[0][1]--;
         }
     } else if (classroom_dialogue_index == 18 && event.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (event.keyboard.keycode == ALLEGRO_KEY_1) {
             classroom_dialogue_index++;
             classroom_dialogue_counter = 0;
+            favor[0][2]++;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2) {
             classroom_dialogue_index += 2;
             classroom_dialogue_counter = 0;
+            favor[0][2]--;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_3) {
             classroom_dialogue_index += 2;
-            classroom_dialogue_counter = 0;    
+            classroom_dialogue_counter = 0;
+            favor[0][2]--;    
         }
     } else if (classroom_dialogue_index == 22 && event.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (event.keyboard.keycode == ALLEGRO_KEY_1) {

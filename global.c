@@ -35,3 +35,5 @@ int character_face_option = 0;
 
 ALLEGRO_FONT *user_name_font = NULL;
 ALLEGRO_FONT *dialogue_font = NULL;
+
+int favor[3][3] = {0};

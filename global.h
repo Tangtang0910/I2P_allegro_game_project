@@ -40,4 +40,6 @@ extern int character_face_option; // 角色的表情
 extern ALLEGRO_FONT *user_name_font;
 extern ALLEGRO_FONT *dialogue_font;
 
+extern int favor[3][3];
+
 #endif
