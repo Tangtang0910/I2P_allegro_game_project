@@ -59,6 +59,22 @@ void game_init() {
     main_character_bitmap = al_load_bitmap("image/main_character_boy.png");
     user_name_font = al_load_font("./font/hand_write_CH.ttf", 100, 0);
     dialogue_font = al_load_font("font/hand_write_CH.ttf",80, 0);
+
+    for (int i = 0; i < 3; i++) {
+        char image_path[100];
+        sprintf(image_path, "./image/classmate/%d.png", i);
+        character_bitmaps[0][i] = al_load_bitmap(image_path);
+    }
+    for (int i = 0; i < 4; i++) {
+        char image_path[100];
+        sprintf(image_path, "./image/professor/%d.png", i);
+        character_bitmaps[1][i] = al_load_bitmap(image_path);
+    } 
+    for (int i = 0; i < 4; i++) {
+        char image_path[100];
+        sprintf(image_path, "./image/goddes/%d.png", i);
+        character_bitmaps[2][i] = al_load_bitmap(image_path);
+    } 
 }
 
 void game_begin() {
@@ -221,4 +237,9 @@ void game_destroy() {
     al_destroy_bitmap(main_character_bitmap);
     al_destroy_font(user_name_font);
     al_destroy_font(dialogue_font);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 4; j++) {
+            al_destroy_bitmap(character_bitmaps[i][j]);
+        }
+    }
 }

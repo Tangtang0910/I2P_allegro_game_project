@@ -34,6 +34,7 @@ extern float text_box_x;           // 文字框的起始 x 座標
 extern float text_box_y;      // 文字框的起始 y 座標
 
 extern ALLEGRO_BITMAP *main_character_bitmap;
+extern ALLEGRO_BITMAP *character_bitmaps[3][4];
 extern ALLEGRO_FONT *user_name_font;
 extern ALLEGRO_FONT *dialogue_font;
 

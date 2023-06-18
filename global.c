@@ -25,5 +25,11 @@ float text_box_x = WIDTH / 15;           // 文字框的起始 x 座標
 float text_box_y = (float)HEIGHT *((float)8/9) ;      // 文字框的起始 y 座標
 
 ALLEGRO_BITMAP *main_character_bitmap = NULL;
+ALLEGRO_BITMAP *character_bitmaps[3][4];
+// first dim
+// 0: classmate, 1: professor, 2: goddes
+// second dim
+// tang's work
+
 ALLEGRO_FONT *user_name_font = NULL;
 ALLEGRO_FONT *dialogue_font = NULL;

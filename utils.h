@@ -3,6 +3,7 @@
 #define UTILS_H
 
 typedef struct {
+    int index;
     int character;
     char text[256];
 } Dialogue;
