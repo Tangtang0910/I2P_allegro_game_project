@@ -23,3 +23,7 @@ float text_box_width = WIDTH * 7/8;   // 文字框的寬度
 float text_box_height = HEIGHT / 5;     // 文字框的高度
 float text_box_x = WIDTH / 15;           // 文字框的起始 x 座標
 float text_box_y = (float)HEIGHT *((float)8/9) ;      // 文字框的起始 y 座標
+
+ALLEGRO_BITMAP *main_character_bitmap = NULL;
+ALLEGRO_FONT *user_name_font = NULL;
+ALLEGRO_FONT *dialogue_font = NULL;

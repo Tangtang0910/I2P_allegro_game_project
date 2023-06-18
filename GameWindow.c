@@ -1,7 +1,7 @@
 #include "GameWindow.h"
 
 bool draw = false;
-int window = 4; // 第幾個畫面
+int window = 3; // 第幾個畫面
 const char *title = "どきどき戀愛冒險";
 
 // ALLEGRO Variables
@@ -14,7 +14,7 @@ int Game_establish() {
 
     game_init();
     game_begin();
-    campus_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
+    classroom_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
     while ( msg != GAME_TERMINATE ) {
         msg = game_run();
         if ( msg == GAME_TERMINATE )
@@ -55,6 +55,10 @@ void game_init() {
     // initialize the icon on the display
     ALLEGRO_BITMAP *icon = al_load_bitmap("./image/icon.jpg");//程式執行icon
     al_set_display_icon(display, icon);
+
+    main_character_bitmap = al_load_bitmap("image/main_character_boy.png");
+    user_name_font = al_load_font("./font/hand_write_CH.ttf", 100, 0);
+    dialogue_font = al_load_font("font/hand_write_CH.ttf",80, 0);
 }
 
 void game_begin() {
@@ -213,4 +217,8 @@ void game_destroy() {
     // Make sure you destroy all things
     al_destroy_event_queue(event_queue);
     al_destroy_display(display);
+    
+    al_destroy_bitmap(main_character_bitmap);
+    al_destroy_font(user_name_font);
+    al_destroy_font(dialogue_font);
 }

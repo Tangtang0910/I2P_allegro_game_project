@@ -85,6 +85,12 @@ void choose_scene_process(ALLEGRO_EVENT event) {
     }
 
     if(event.type == ALLEGRO_EVENT_KEY_UP && event.keyboard.keycode == ALLEGRO_KEY_ENTER && choose_gender_circle_fix){
+        al_destroy_bitmap(main_character_bitmap);
+        if(charator_gender){
+            main_character_bitmap = al_load_bitmap("image/main_character_boy.png");
+        }else{
+            main_character_bitmap = al_load_bitmap("image/main_character_girl.png");
+        }
         judge_next_window = true;
     }
 }

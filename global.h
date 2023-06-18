@@ -33,4 +33,8 @@ extern float text_box_height;     // 文字框的高度
 extern float text_box_x;           // 文字框的起始 x 座標
 extern float text_box_y;      // 文字框的起始 y 座標
 
+extern ALLEGRO_BITMAP *main_character_bitmap;
+extern ALLEGRO_FONT *user_name_font;
+extern ALLEGRO_FONT *dialogue_font;
+
 #endif
