@@ -20,8 +20,15 @@ extern bool key_state[ALLEGRO_KEY_MAX];
 extern bool judge_next_window;
 extern ALLEGRO_EVENT_QUEUE *event_queue;
 extern ALLEGRO_TIMER *fps;
-extern char choose_scene_name_input[100];
+extern char user_name[100];
 extern bool isFirstDraw ;
 extern int charator_gender;
+extern int goddes_favorability;
+extern int professor_favorability;
+extern int classmate_favorability;
+extern float text_box_width;   // 文字框的寬度
+extern float text_box_height;     // 文字框的高度
+extern float text_box_x;           // 文字框的起始 x 座標
+extern float text_box_y;      // 文字框的起始 y 座標
 
 #endif

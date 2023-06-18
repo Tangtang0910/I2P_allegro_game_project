@@ -1,7 +1,7 @@
 #include "GameWindow.h"
 
 bool draw = false;
-int window = 1; // 第幾個畫面
+int window = 3; // 第幾個畫面
 const char *title = "どきどき戀愛冒險";
 
 // ALLEGRO Variables
@@ -14,7 +14,7 @@ int Game_establish() {
 
     game_init();
     game_begin();
-    //choose_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
+    classroom_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
     while ( msg != GAME_TERMINATE ) {
         msg = game_run();
         if ( msg == GAME_TERMINATE )
@@ -88,7 +88,7 @@ void game_update(){
             window = 3;
        } else if( window == 3 ) {
             classroom_scene_destroy();
-            // next scene init
+            campus_scene_init();
             judge_next_window = false;
             window = 4;
        } else if (window == 4) {
@@ -109,6 +109,8 @@ int process_event(){
     }else if( window == 3 ){
         classroom_scene_process(event);
     }else if( window == 4 ){
+        campus_scene_process(event);
+    }else if( window == 5 ){
         //choose_scene_process(event);
     }
 
@@ -131,8 +133,11 @@ void game_draw(){
     } else if (window == 3) {
         classroom_scene_draw();
     } else if (window == 4) {
+        campus_scene_draw();
+    } else if (window == 5) {
         // next scene draw
     }
+
     al_flip_display();
 }
 

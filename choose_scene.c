@@ -39,10 +39,10 @@ void choose_scene_process(ALLEGRO_EVENT event) {
     if(event.type == ALLEGRO_EVENT_KEY_CHAR){
         char keycode = event.keyboard.unichar;
         if(keycode >= 32 && keycode <= 126) {
-            int len = strlen(choose_scene_name_input);
+            int len = strlen(user_name);
             if(len < 10) { // avoid buffer overflow
-                choose_scene_name_input[len] = keycode;
-                choose_scene_name_input[len + 1] = '\0';
+                user_name[len] = keycode;
+                user_name[len + 1] = '\0';
             }
         }
     }
@@ -50,9 +50,9 @@ void choose_scene_process(ALLEGRO_EVENT event) {
         
 
         if(event.keyboard.keycode == ALLEGRO_KEY_BACKSPACE) { // handle backspace
-            int len = strlen(choose_scene_name_input);
+            int len = strlen(user_name);
             if(len > 0) { 
-                choose_scene_name_input[len - 1] = '\0';
+                user_name[len - 1] = '\0';
             }
         }
     }
@@ -76,12 +76,12 @@ void choose_scene_process(ALLEGRO_EVENT event) {
     } 
     else if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
         // 鼠標按下事件
-        if ((mouse_x-WIDTH*1.72/3)*(mouse_x-WIDTH*1.72/3) + (mouse_y-HEIGHT*2.32/5)*(mouse_y-HEIGHT*2.32/5) <= 150*150) {
+        if (mouse_girl_circle_distance <= 150*150) {
             choose_scene_inside_button = true;
             choose_gender_circle_fix = false;
             charator_gender = 0;//女
         }
-        else if ((mouse_x-WIDTH*1.23/3)*(mouse_x-WIDTH*1.23/3) + (mouse_y-HEIGHT*2.32/5)*(mouse_y-HEIGHT*2.32/5) <= 150*150){
+        else if (mouse_boy_circle_distance <= 150*150){
             choose_scene_inside_button = true;
             choose_gender_circle_fix = false;
             charator_gender = 1;//男
@@ -130,7 +130,7 @@ void choose_scene_draw() {
     al_draw_rectangle(WIDTH/3, HEIGHT*4/6, WIDTH*2/3, HEIGHT*4/5, al_map_rgb(210,33,147), 7);
     
     // 畫出輸入的文字
-    if(strlen(choose_scene_name_input) == 0){    
+    if(strlen(user_name) == 0){    
         if(second < 0.8){
             al_draw_text(choose_scene_pre_enter_name_font, al_map_rgb(200, 204, 241), WIDTH*1.8/5, HEIGHT*7.1/10, ALLEGRO_ALIGN_LEFT, "Enter Your Name");
         }
@@ -141,7 +141,7 @@ void choose_scene_draw() {
             choose_scene_time_counter = 0;
         }
     else{
-        al_draw_text(choose_scene_name_font, al_map_rgb(0,0,0), WIDTH*2/5, HEIGHT*6.7/10, ALLEGRO_ALIGN_LEFT, choose_scene_name_input);
+        al_draw_text(choose_scene_name_font, al_map_rgb(0,0,0), WIDTH*2/5, HEIGHT*6.7/10, ALLEGRO_ALIGN_LEFT, user_name);
     }
 }  
 
