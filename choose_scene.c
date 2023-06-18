@@ -19,6 +19,7 @@ void choose_scene_init() {
     bool choose_gender_circle_fix = false;
     int mouse_boy_circle_distance = 0;
     int mouse_girl_circle_distance = 0;
+    user_name[0] = '\0';
 
     male_symbo_image = al_load_bitmap("./image/boy.png");
     female_symbo_image = al_load_bitmap("./image/girl.png");

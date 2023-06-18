@@ -4,6 +4,7 @@
 
 typedef struct {
     int index;
+    int type; // 1: dialogue, 2: options
     int character;
     char text[256];
 } Dialogue;

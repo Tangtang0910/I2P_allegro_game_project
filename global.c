@@ -9,11 +9,11 @@ ALLEGRO_TIMER *fps = NULL;
 bool key_state[ALLEGRO_KEY_MAX] = {false};
 bool judge_next_window = false;
 bool judge_previous_window = false;
-int scene_option = -1; // 有分岔的場景，選擇哪一個
-int end_option = -1; // 哪一個結局
+int scene_option = 1; // 有分岔的場景，選擇哪一個
+int end_option = 1; // 哪一個結局
 
-char user_name[100] = {0};//使用者名字
-int charator_gender = 2;//使用者性別
+char user_name[100] = "username";//使用者名字
+int charator_gender = 1;//使用者性別
 
 int goddes_favorability = 5;
 int professor_favorability = 5;
@@ -30,6 +30,7 @@ ALLEGRO_BITMAP *character_bitmaps[3][4];
 // 0: classmate, 1: professor, 2: goddes
 // second dim
 // tang's work
+int character_face_option = 0;
 
 ALLEGRO_FONT *user_name_font = NULL;
 ALLEGRO_FONT *dialogue_font = NULL;
