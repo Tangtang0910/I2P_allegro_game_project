@@ -1,5 +1,6 @@
 #include "classroom_scene.h"
 ALLEGRO_BITMAP *classroom_scene_background = NULL;
+ALLEGRO_BITMAP *classroom_scene_main_charator= NULL;
 ALLEGRO_FONT *class_font = NULL;
 char dialogue_texts[][256] = {
     "我：最近在資工系感覺課業繁重啊... (✖﹏✖)",
@@ -18,12 +19,17 @@ void classroom_scene_init() {
 
     classroom_scene_background = al_load_bitmap("image/classroom_bk_1.jpeg");
     if (!classroom_scene_background) {
-        fprintf(stderr, "加载教室背景图片失败。\n");
+        fprintf(stderr, "教室圖失敗。\n");
     }
 
-    class_font = al_load_font("font/hand_write_CH.ttf", 18, 0);
+    class_font = al_load_font("font/hand_write_CH.ttf",50, 0);
     if (!class_font) {
-        fprintf(stderr, "加载字体失败。\n");
+        fprintf(stderr, "字體失敗。\n");
+    }
+    if(charator_gender){
+        classroom_scene_main_charator = al_load_bitmap("image/main_chrator_boy.png");
+    }else{
+        classroom_scene_main_charator = al_load_bitmap("image/main_charator_girl.png");
     }
 }
 
@@ -41,14 +47,18 @@ void classroom_scene_draw() {
     al_clear_to_color(al_map_rgb(0, 0, 0));  // 清除畫面為黑色
     al_draw_scaled_bitmap(classroom_scene_background, 0, 0, al_get_bitmap_width(classroom_scene_background), al_get_bitmap_height(classroom_scene_background),
                           0, 0, WIDTH, HEIGHT, 0);
+   al_draw_bitmap(classroom_scene_main_charator, 0, 0, 0);
 
-    al_draw_filled_rectangle(WIDTH*1/5,WIDTH*4/5, HEIGHT*3/5, HEIGHT*4/5, al_map_rgb(255, 255, 255));
-    al_draw_rectangle(100, 100, 500, 300, al_map_rgb(0, 0, 0), 2);
 
-  
-    typemachine(0.1, dialogue_texts[current_dialogue_index], class_font, al_map_rgb(0, 0, 0), 120, 120, &counter);
+    float text_box_width = WIDTH * 3 / 5;   // 文字框的寬度
+    float text_box_height = HEIGHT / 5;     // 文字框的高度
+    float text_box_x = WIDTH / 5;           // 文字框的起始 x 座標
+    float text_box_y = (float)HEIGHT *((float)8/9) ;      // 文字框的起始 y 座標
 
-    al_flip_display();
+    al_draw_filled_rectangle(text_box_x, text_box_y - text_box_height, text_box_x + text_box_width, text_box_y, al_map_rgb(255, 255, 255));
+    al_draw_rectangle(text_box_x, text_box_y - text_box_height, text_box_x + text_box_width, text_box_y, al_map_rgb(0, 0, 0), 2);
+
+    typemachine(0.01, dialogue_texts[current_dialogue_index], class_font, al_map_rgb(0, 0, 0), text_box_x + 20, text_box_y - text_box_height + 20, &counter);
 }
 
 void classroom_scene_destroy() {
