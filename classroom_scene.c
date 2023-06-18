@@ -144,7 +144,7 @@ void classroom_scene_draw() {
         al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));
         al_draw_text(user_name_font, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, "不知名宅宅");
     } else if(current_dialog.character == 1){
-        al_draw_scaled_bitmap(character_bitmaps[1][current_dialog.face_option], 0, 0, al_get_bitmap_width(character_bitmaps[1][current_dialog.face_option]), al_get_bitmap_height(character_bitmaps[1][current_dialog.face_option]), WIDTH/15, HEIGHT/10, WIDTH/3.4, HEIGHT/1.7, 0);
+        al_draw_scaled_bitmap(character_bitmaps[1][current_dialog.face_option], 0, 0, al_get_bitmap_width(character_bitmaps[1][current_dialog.face_option]), al_get_bitmap_height(character_bitmaps[1][current_dialog.face_option]), WIDTH/10, HEIGHT/10, WIDTH/4, HEIGHT/1.7, 0);
         al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));
         al_draw_text(user_name_font, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, "教授");
     } else if(current_dialog.character == 2){
