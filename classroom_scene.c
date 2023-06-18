@@ -135,27 +135,7 @@ void classroom_scene_draw() {
     }
 
     Dialogue current_dialog = classroom_dialogue[classroom_dialogue_index];
-    if (current_dialog.character == -1) {
-        al_draw_bitmap(main_character_bitmap, 0, 0, 0);
-        al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));
-        al_draw_text(user_name_font, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, user_name);
-    } else if(current_dialog.character == 0){
-        al_draw_scaled_bitmap(character_bitmaps[0][current_dialog.face_option], 0, 0, al_get_bitmap_width(character_bitmaps[0][current_dialog.face_option]), al_get_bitmap_height(character_bitmaps[0][current_dialog.face_option]), WIDTH/15, HEIGHT/6, WIDTH/3, HEIGHT/1.9, 0);
-        al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));
-        al_draw_text(user_name_font, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, "不知名宅宅");
-    } else if(current_dialog.character == 1){
-        al_draw_scaled_bitmap(character_bitmaps[1][current_dialog.face_option], 0, 0, al_get_bitmap_width(character_bitmaps[1][current_dialog.face_option]), al_get_bitmap_height(character_bitmaps[1][current_dialog.face_option]), WIDTH/10, HEIGHT/10, WIDTH/4, HEIGHT/1.7, 0);
-        al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));
-        al_draw_text(user_name_font, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, "教授");
-    } else if(current_dialog.character == 2){
-        al_draw_scaled_bitmap(character_bitmaps[2][current_dialog.face_option], 0, 0, al_get_bitmap_width(character_bitmaps[2][current_dialog.face_option]), al_get_bitmap_height(character_bitmaps[2][current_dialog.face_option]), WIDTH/20, HEIGHT/10, WIDTH/4, HEIGHT/1.7, 0);
-        al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));
-        al_draw_text(user_name_font, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, "女神");
-    }
-    al_draw_filled_rectangle(text_box_x, text_box_y - text_box_height, text_box_x + text_box_width, text_box_y, al_map_rgb(255, 255, 255));
-    al_draw_rectangle(text_box_x, text_box_y - text_box_height, text_box_x + text_box_width, text_box_y, al_map_rgb(246,165,192), 10);
-    
-    typemachine(0.01, current_dialog.text, dialogue_font, al_map_rgb(0, 0, 0), text_box_x + 25, text_box_y - text_box_height + 30, &classroom_dialogue_counter);
+    display_dialog(current_dialog, &classroom_dialogue_counter);
 }
 
 void classroom_scene_destroy() {
