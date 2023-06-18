@@ -41,8 +41,9 @@ int campus_dialogue_counter = 0;
 void campus_scene_init(){
     al_init_image_addon();
 
-    int campus_dialogue_index = 0;  
-    int campus_dialogue_counter = 0;  
+    campus_dialogue_index = 0;  
+    campus_dialogue_counter = 0;  
+    favor[1][0] = favor[1][1] = favor[1][2] = 0;
 
     campus_scene_background = al_load_bitmap("./image/campus_bk.jpeg");
     campus_scene_hand = al_load_bitmap("./image/hand.png");
@@ -52,8 +53,7 @@ void campus_scene_process(ALLEGRO_EVENT event){
     if (campus_dialogue[campus_dialogue_index].type == 1 && event.type == ALLEGRO_EVENT_KEY_DOWN && event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
         if (campus_dialogue_index >= 29) {
             judge_next_window = true;
-        }
-        else {
+        } else {
             campus_dialogue_index++;
             campus_dialogue_counter = 0; 
         }
@@ -65,6 +65,7 @@ void campus_scene_process(ALLEGRO_EVENT event){
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2) { //pro -1
             campus_dialogue_index++;
             campus_dialogue_counter = 0; 
+            favor[1][1]--;
         }
     } else if (campus_dialogue_index == 9 && event.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (event.keyboard.keycode == ALLEGRO_KEY_1) {
@@ -73,6 +74,7 @@ void campus_scene_process(ALLEGRO_EVENT event){
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2) { //pro +1
             campus_dialogue_index++;
             campus_dialogue_counter = 0;  
+            favor[1][1]++;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_3) {
             campus_dialogue_index++;
             campus_dialogue_counter = 0;
@@ -97,6 +99,7 @@ void campus_scene_process(ALLEGRO_EVENT event){
         } else if (event.keyboard.keycode == ALLEGRO_KEY_4) { //classmate +1
             campus_dialogue_index++;
             campus_dialogue_counter = 0;    
+            favor[1][0]++;
         }
     } 
 }
