@@ -137,7 +137,7 @@ void classroom_scene_draw() {
     }
 
     if (classroom_dialogue_index == 8) {
-        sprintf(classroom_dialogue[classroom_dialogue_index].text, "教授：以上是今天的教學內容，這裡有一個題目，\n      %s 同學願意試試看嗎？", user_name);
+        sprintf(classroom_dialogue[classroom_dialogue_index].text, "以上是今天的教學內容，這裡有一個題目，\n%s 同學願意試試看嗎？", user_name);
     }else if (classroom_dialogue_index == 18){
         al_draw_scaled_bitmap(classroom_scene_question, 0, 0, al_get_bitmap_width(classroom_scene_question), al_get_bitmap_height(classroom_scene_question), WIDTH*2/7,  50, WIDTH*3/5, HEIGHT*3/5, 0);
     }
