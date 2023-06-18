@@ -23,7 +23,7 @@ void classroom_scene_init() {
     classroom_scene_background = al_load_bitmap("image/classroom_bk_1.jpeg");
 
     class_font = al_load_font("font/hand_write_CH.ttf",80, 0);
-    classroom_user_name = al_load_font("./font/hand_write_CH.ttf", 70, 0);
+    classroom_user_name = al_load_font("./font/hand_write_CH.ttf", 100, 0);
 
     if(charator_gender){
         classroom_scene_main_charator = al_load_bitmap("image/main_chrator_boy.png");
@@ -50,12 +50,13 @@ void classroom_scene_draw() {
 
 
     al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));
-    al_draw_text(classroom_user_name, al_map_rgb(0,0,0), text_box_x*0.9, text_box_y*0.75, ALLEGRO_ALIGN_LEFT, user_name);
+    
     
     al_draw_filled_rectangle(text_box_x, text_box_y - text_box_height, text_box_x + text_box_width, text_box_y, al_map_rgb(255, 255, 255));
     al_draw_rectangle(text_box_x, text_box_y - text_box_height, text_box_x + text_box_width, text_box_y, al_map_rgb(246,165,192), 10);
-
-    typemachine(0.01, dialogue_texts[classroom_current_dialogue_index], class_font, al_map_rgb(0, 0, 0), text_box_x + 20, text_box_y - text_box_height + 20, &classroom_scene_counter);
+    al_draw_text(classroom_user_name, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, user_name);
+    
+    typemachine(0.01, dialogue_texts[classroom_current_dialogue_index], class_font, al_map_rgb(0, 0, 0), text_box_x + 25, text_box_y - text_box_height + 30, &classroom_scene_counter);
 }
 
 void classroom_scene_destroy() {
