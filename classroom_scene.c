@@ -1,4 +1,5 @@
 #include "classroom_scene.h"
+
 ALLEGRO_BITMAP *classroom_scene_background = NULL;
 ALLEGRO_BITMAP *classroom_scene_main_charator= NULL;
 ALLEGRO_FONT *classroom_user_name = NULL;

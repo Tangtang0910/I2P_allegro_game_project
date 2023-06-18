@@ -1,5 +1,5 @@
 #include "global.h"
-#include "type.h"
+#include "utils.h"
 
 void menu_init();
 void menu_process(ALLEGRO_EVENT event);
