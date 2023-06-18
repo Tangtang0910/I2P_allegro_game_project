@@ -26,7 +26,7 @@ Dialogue classroom_dialogue[] = {
     {20, 1, 3, 0, "答錯！"},
     {21, 1, 2, 0, "對了，請問你是什麼學校的呢？"},
     {22, 2, 2, 0, "1)交大\n2)清大"},
-    {23, 1, 2, 0, "原來如此，謝謝你的幫忙"},
+    {23, 1, 2, 1, "原來如此，謝謝你的幫忙"},
 };
 int classroom_dialogue_index = 0;  
 int classroom_dialogue_counter = 0;  

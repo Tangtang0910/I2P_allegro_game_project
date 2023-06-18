@@ -16,10 +16,6 @@ int end_option = 1; // 哪一個結局
 char user_name[100] = "username";//使用者名字
 int charator_gender = 1;//使用者性別
 
-int goddes_favorability = 5;
-int professor_favorability = 5;
-int classmate_favorability = 5;
-
 float text_box_width = WIDTH * 7/8;   // 文字框的寬度
 float text_box_height = HEIGHT / 5;     // 文字框的高度
 float text_box_x = WIDTH / 15;           // 文字框的起始 x 座標
