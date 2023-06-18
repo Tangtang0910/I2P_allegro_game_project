@@ -1,7 +1,7 @@
 #include "GameWindow.h"
 
 bool draw = false;
-int window = 1; // 第幾個畫面
+int window = 4; // 第幾個畫面
 const char *title = "どきどき戀愛冒險";
 
 // ALLEGRO Variables
@@ -14,7 +14,7 @@ int Game_establish() {
 
     game_init();
     game_begin();
-    //classroom_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
+    campus_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
     while ( msg != GAME_TERMINATE ) {
         msg = game_run();
         if ( msg == GAME_TERMINATE )
@@ -75,25 +75,47 @@ void game_begin() {
 }
 
 void game_update(){
-    if( judge_next_window ){
-        if( window == 1 ){
+    if (judge_next_window) {
+        if (window == 1) {
             menu_destroy();
             choose_scene_init();
             judge_next_window = false;
             window = 2;
-        } else if( window == 2 ) {
+        } else if (window == 2) {
             choose_scene_destroy();
             classroom_scene_init();
             judge_next_window = false;
             window = 3;
-       } else if( window == 3 ) {
+        } else if (window == 3) {
             classroom_scene_destroy();
-            campus_scene_init();
+            if (scene_option == 1) {
+                campus_scene_init();
+                window = 4;
+            } else if (scene_option == 2) {
+                classroom_end_scene_init();
+                window = 5;
+            }
             judge_next_window = false;
-            window = 4;
-       } else if (window == 4) {
-            // todo
-       }
+        } else if (window == 4) {
+            campus_scene_destroy();
+            outside_scene_init();
+            judge_next_window = false;
+            window = 6;
+        } else if (window == 5) {
+            classroom_end_scene_destroy();
+            judge_next_window = false;
+        } else if (window == 6) {
+            outside_scene_destroy();
+            outside_end_scene_init();
+            judge_next_window = false;
+            window = 7;
+        } else if (window == 7) {
+            outside_end_scene_destroy();
+            judge_next_window = false;
+        }
+    }
+    if (judge_previous_window) {
+        
     }
 }
 
@@ -102,16 +124,20 @@ int process_event(){
     ALLEGRO_EVENT event;
     al_wait_for_event(event_queue, &event);
     // process the event of other component
-    if( window == 1 ){
+    if (window == 1) {
         menu_process(event);
-    }else if( window == 2 ){
+    } else if (window == 2) {
         choose_scene_process(event);
-    }else if( window == 3 ){
+    } else if (window == 3) {
         classroom_scene_process(event);
-    }else if( window == 4 ){
+    } else if (window == 4) {
         campus_scene_process(event);
-    }else if( window == 5 ){
-        //choose_scene_process(event);
+    } else if (window == 5) {
+        classroom_end_scene_process(event);
+    } else if (window == 6) {
+        outside_scene_process(event);
+    } else if (window == 7) {
+        outside_end_scene_process(event);
     }
 
     // Shutdown our program
@@ -135,7 +161,11 @@ void game_draw(){
     } else if (window == 4) {
         campus_scene_draw();
     } else if (window == 5) {
-        // next scene draw
+        classroom_end_scene_draw();
+    } else if (window == 6) {
+        outside_scene_draw();
+    } else if (window == 7) {
+        outside_end_scene_draw();
     }
 
     al_flip_display();
