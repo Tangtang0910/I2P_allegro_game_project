@@ -123,5 +123,6 @@ void campus_scene_draw(){
 }
 
 void campus_scene_destroy(){
-    
+    al_destroy_bitmap(campus_scene_background);
+    al_destroy_bitmap(campus_scene_hand);
 }
