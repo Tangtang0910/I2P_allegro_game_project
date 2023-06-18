@@ -1,8 +1,6 @@
 #include "classroom_scene.h"
 
-ALLEGRO_BITMAP *classroom_scene_background_out = NULL, *classroom_scene_background_in = NULL;
-ALLEGRO_FONT *classroom_user_name = NULL;
-ALLEGRO_FONT *class_font = NULL;
+ALLEGRO_BITMAP *classroom_scene_background_out = NULL, *classroom_scene_background_in = NULL, *classroom_scene_question = NULL;
 
 Dialogue classroom_dialogue[] = {
     {0, 1, -1, -1, "最近在資工系感覺課業繁重啊... "},
@@ -10,8 +8,8 @@ Dialogue classroom_dialogue[] = {
     {2, 1, -1, -1, "而且最令人期待的是等等會跟女神一起上課 (owo)"},
     {3, 1, -1, -1, "不知道今天有沒有機會跟她說到話呢～（歪頭燦笑）"},
     {4, 1, -1, -1, "（鐘響）啊啊要趕快去下一堂課了，不然搶不到好位子，先不說了..."},
-    {5, 1, 0, 0, "同...同學，你好可愛喔，跟我交往好嗎www？（後空翻"},
-    {6, 2, 0, 0, "1)doki doki doki doki doki doki <3\n2)不...不好意思，請問你是？"},
+    {5, 1, 0, 1, "同...同學，你好可愛喔，跟我交往好嗎www？（後空翻"},
+    {6, 2, 0, 1, "1)doki doki doki doki doki doki <3\n2)不...不好意思，請問你是？"},
     {7, 1, 0, 2, "55555555555555555 QAQQQ"},
     {8, 1, 1, 0, "以上是今天的教學內容，這裡有一個題目，\n(玩家姓名)同學願意試試看嗎？"},
     {9, 2, -1, -1, "1)好\n2)先pass\n3)恩...先思考一下"},
@@ -45,6 +43,7 @@ void classroom_scene_init() {
 
     classroom_scene_background_out = al_load_bitmap("image/classroom_bk_out.jpeg");
     classroom_scene_background_in = al_load_bitmap("image/classroom_bk_in.webp");
+    classroom_scene_question = al_load_bitmap("image/classroom_question.jpg");
 }
 
 void classroom_scene_process(ALLEGRO_EVENT event) {
@@ -131,6 +130,8 @@ void classroom_scene_draw() {
 
     if (classroom_dialogue_index == 8) {
         sprintf(classroom_dialogue[classroom_dialogue_index].text, "教授：以上是今天的教學內容，這裡有一個題目，\n      %s 同學願意試試看嗎？", user_name);
+    }else if (classroom_dialogue_index == 18){
+        al_draw_scaled_bitmap(classroom_scene_question, 0, 0, al_get_bitmap_width(classroom_scene_question), al_get_bitmap_height(classroom_scene_question), WIDTH*2/7,  50, WIDTH*3/5, HEIGHT*3/5, 0);
     }
 
     Dialogue current_dialog = classroom_dialogue[classroom_dialogue_index];
@@ -160,6 +161,7 @@ void classroom_scene_draw() {
 void classroom_scene_destroy() {
     al_destroy_bitmap(classroom_scene_background_out);
     al_destroy_bitmap(classroom_scene_background_in);
+    al_destroy_bitmap(classroom_scene_question);
 }
 
 // 在程式的適當位置呼叫 classroom_scene_destroy() 來釋放字體資源
