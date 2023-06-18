@@ -14,7 +14,12 @@ void campus_scene_init(){
 }
 
 void campus_scene_process(ALLEGRO_EVENT event){
-
+    if(event.type == ALLEGRO_EVENT_KEY_UP && event.keyboard.keycode == ALLEGRO_KEY_Q){
+        judge_next_window = true;
+    }
+    if(event.type == ALLEGRO_EVENT_KEY_UP && event.keyboard.keycode == ALLEGRO_KEY_R){
+        judge_previous_window = true;
+    }
 }
 
 void campus_scene_draw(){

@@ -114,8 +114,34 @@ void game_update(){
             judge_next_window = false;
         }
     }
+
     if (judge_previous_window) {
-        
+        if (window == 7) {
+            outside_end_scene_destroy();
+            outside_scene_init();
+            judge_previous_window = false;
+            window = 6;
+        } else if (window == 6) {
+            outside_scene_destroy();
+            campus_scene_init();
+            judge_previous_window = false;
+            window = 4;
+        } else if (window == 5) {
+            classroom_end_scene_destroy();
+            classroom_scene_init();
+            judge_previous_window = false;
+            window = 3;
+        } else if (window == 4) {
+            campus_scene_destroy();
+            classroom_scene_init();
+            judge_previous_window = false;
+            window = 3;
+        } else if (window == 3) {
+            classroom_scene_destroy();
+            choose_scene_init();
+            judge_previous_window = false;
+            window = 2;
+        }
     }
 }
 
