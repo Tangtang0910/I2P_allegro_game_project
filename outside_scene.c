@@ -70,7 +70,7 @@ Dialogue outside_scene_dialogue[] = {
     {64, 1, 2, 0, "怎麼是你？借過一下我趕時間"},
     {65, 1, -1, 0, "你怎麼了，為什麼這麼趕呀?"},
     {66, 1, 2, 2, "我要去遊戲demo了，但我還沒趕完遊戲內容，該怎麼辦啊...."},
-    {67, 1, -1, 0, "\n1)抱歉我也幫不上忙...QQ \n2)痾....喝熱水有用嗎??\n3)我這邊剛好有之前做過的project，叫做 doki doki 戀愛冒險，可以借你用一下"},
+    {67, 2, -1, 0, "\n1)抱歉我也幫不上忙...QQ \n2)痾....喝熱水有用嗎??\n3)我這邊剛好有之前做過的project，叫做 doki doki 戀愛冒險，可以借你用一下"},
     {68, 1, 2, 0, "唉沒事，我去趕期末了"},
     {69, 1, -1, 0, "掰掰～改天見ㄚ owo"},
 };
@@ -138,6 +138,7 @@ void outside_scene_process(ALLEGRO_EVENT event){
             outside_scene_dialogue_index += 2;
             outside_scene_dialogue_counter = 0; 
         } else if (outside_scene_dialogue_index >= 69) {
+            end_option = 3;
             judge_next_window = true;
         } else {
             outside_scene_dialogue_index++;
@@ -168,12 +169,15 @@ void outside_scene_process(ALLEGRO_EVENT event){
         if (event.keyboard.keycode == ALLEGRO_KEY_1) { //goddes +1
             outside_scene_dialogue_index++;
             outside_scene_dialogue_counter = 0;
+            favor[2][2]++;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2){ //goddes -1
             outside_scene_dialogue_index += 2;
             outside_scene_dialogue_counter = 0;
+            favor[2][2]--;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_3){ //goddes -1
             outside_scene_dialogue_index += 2;
             outside_scene_dialogue_counter = 0;
+            favor[2][2]--;
         }
 
     }
@@ -181,26 +185,33 @@ void outside_scene_process(ALLEGRO_EVENT event){
         if (event.keyboard.keycode == ALLEGRO_KEY_1) {
             outside_scene_dialogue_index += 2; // classmate -1
             outside_scene_dialogue_counter = 0;
+            favor[2][0]--;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2){
             outside_scene_dialogue_index ++; // classmate +1
             outside_scene_dialogue_counter = 0;
+            favor[2][0]++;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_3){
             outside_scene_dialogue_index += 2; // classmate -1
             outside_scene_dialogue_counter = 0;
+            favor[2][0]--;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_4){
             outside_scene_dialogue_index += 2; // classmate -1
             outside_scene_dialogue_counter = 0;
+            favor[2][0]--;
         }
     }
     else if (outside_scene_dialogue_index == 56 && event.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (event.keyboard.keycode == ALLEGRO_KEY_1) { 
             end_option = 0; // professor happy endding
+            judge_next_window = true;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2){ //pro -1
             outside_scene_dialogue_index += 2;
             outside_scene_dialogue_counter = 0;
+            favor[2][1]--;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_3){ //pro -1
             outside_scene_dialogue_index += 2;
             outside_scene_dialogue_counter = 0;
+            favor[2][1]--;
         }
     }
     else if (outside_scene_dialogue_index == 67 && event.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -209,8 +220,10 @@ void outside_scene_process(ALLEGRO_EVENT event){
             outside_scene_dialogue_counter = 0;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2){ 
             end_option = 1; // goddes bad endding
+            judge_next_window = true;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_3){ 
             end_option = 2; // goddes happy endding
+            judge_next_window = true;
         }
     }
 }

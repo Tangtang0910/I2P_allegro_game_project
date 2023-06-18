@@ -41,7 +41,7 @@ void classroom_end_scene_draw() {
             Dialogue current_dialog = classroom_classmate_end_dialogue[classroom_end_dialogue_index];
             display_dialog(current_dialog, &classroom_end_dialogue_counter, true);
         } else {
-            al_draw_scaled_bitmap(end_bitmaps[0][0][1], 0, 0, al_get_bitmap_width(end_bitmaps[0][0][1]), al_get_bitmap_height(end_bitmaps[0][0][1]), 0, 0, WIDTH, HEIGHT, 0);
+            al_draw_scaled_bitmap(end_bitmaps[0][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[0][0][charator_gender]), al_get_bitmap_height(end_bitmaps[0][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
         }
     } else if (end_option == 1) {
         al_draw_scaled_bitmap(end_bitmaps[2][1][0], 0, 0, al_get_bitmap_width(end_bitmaps[2][1][0]), al_get_bitmap_height(end_bitmaps[2][1][0]), 0, 0, WIDTH, HEIGHT, 0);

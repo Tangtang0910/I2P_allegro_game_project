@@ -18,33 +18,91 @@ Dialogue professor_end_dialogue[] = {
 Dialogue goddess_end_dialogue[] = {
     {0, 1, 2, 0, "那個...謝謝你之前的幫忙"},
     {1, 1, 2, 1, "其實自從你幫我解題之後我就很欣賞你"},
-    {2, 1, 2, 3, "以後也請多多指叫了喔 學弟......或者說 親 愛 的 ？ "},
+    {2, 1, 2, 3, "以後也請多多指較了喔 學弟......或者說 親 愛 的 ？ "},
+};
+Dialogue goddess_bad_end_dialogue[] = {
+    {0, 1, 3, 0, "喝什麼熱水啊，要喝熱水你自己回家喝吧"},
+    {1, 1, 3, 0, "臭直男難怪活到十八歲了還沒有女朋友"},
+    {2, 1, 3, 0, "離我遠一點，滾得越遠越好"},
 };
 int outside_end_dialogue_index = 0;  
 int outside_end_dialogue_counter = 0;
+int ending_character = 0, ending_flag = 0;
 
 void outside_end_scene_init(){
     outside_end_dialogue_index = 0;
     outside_end_dialogue_counter = 0;
-    drawSakura = true;
+    
+    if (end_option == 0) {
+        ending_character = 1;
+        ending_flag = 0;
+    } else if (end_option == 1) {
+        ending_character = 2;
+        ending_flag = 1;
+    } else if (end_option == 2) {
+        ending_character = 2;
+        ending_flag = 0;
+    } else if (end_option == 3) {
+        // determine by favor
+        int total_favor[3] = {0};
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                total_favor[i] += favor[j][i];
+            }
+        }
+        int max_val = -100;
+        for (int i = 0; i < 3; i++) {
+            if (total_favor[i] > max_val) {
+                max_val = total_favor[i];
+                ending_character = i;
+            }
+        }
+        ending_flag = 0;
+    }
+
+    if (ending_flag == 0) {
+        drawSakura = true;
+    }
 }
 
 void outside_end_scene_process(ALLEGRO_EVENT event){
     if (event.type == ALLEGRO_EVENT_KEY_DOWN && event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
-        if (outside_end_dialogue_index < 3) {
-            outside_end_dialogue_index++;
-            outside_end_dialogue_counter = 0;
-        }
+        outside_end_dialogue_index++;
+        outside_end_dialogue_counter = 0;
     }
 }
 
 void outside_end_scene_draw(){
-    if (outside_end_dialogue_index == 3) {
-        al_draw_scaled_bitmap(end_bitmaps[2][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[2][0][charator_gender]), al_get_bitmap_height(end_bitmaps[2][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
-    } else {
-        al_draw_bitmap(main_background, 0, 0, 0);
-        Dialogue current_dialog = goddess_end_dialogue[outside_end_dialogue_index];
-        display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+    if (ending_character == 0) {
+        if (outside_end_dialogue_index <= 6) {
+            al_draw_bitmap(main_background, 0, 0, 0);
+            Dialogue current_dialog = classmate_end_dialogue[outside_end_dialogue_index];
+            display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+        } else {
+            al_draw_scaled_bitmap(end_bitmaps[0][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[0][0][charator_gender]), al_get_bitmap_height(end_bitmaps[0][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
+        }
+    } else if (ending_character == 1) {
+        if (outside_end_dialogue_index <= 3) {
+            al_draw_bitmap(main_background, 0, 0, 0);
+            Dialogue current_dialog = professor_end_dialogue[outside_end_dialogue_index];
+            display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+        } else {
+            al_draw_scaled_bitmap(end_bitmaps[1][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[1][0][charator_gender]), al_get_bitmap_height(end_bitmaps[1][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
+        }
+    } else if (ending_character == 2 && ending_flag == 0) {
+        if (outside_end_dialogue_index <= 2) {
+            al_draw_bitmap(main_background, 0, 0, 0);
+            Dialogue current_dialog = goddess_end_dialogue[outside_end_dialogue_index];
+            display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+        } else {
+            al_draw_scaled_bitmap(end_bitmaps[2][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[2][0][charator_gender]), al_get_bitmap_height(end_bitmaps[2][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
+        }
+    } else if (ending_character == 2 && ending_flag == 1) {
+        al_draw_scaled_bitmap(end_bitmaps[2][1][0], 0, 0, al_get_bitmap_width(end_bitmaps[2][1][0]), al_get_bitmap_height(end_bitmaps[2][1][0]), 0, 0, WIDTH, HEIGHT, 0);
+        if (outside_end_dialogue_index <= 2) {
+            Dialogue current_dialog = goddess_bad_end_dialogue[outside_end_dialogue_index];
+            display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+        }
     }
 }
 
