@@ -6,6 +6,7 @@ typedef struct {
     int index;
     int type; // 1: dialogue, 2: options
     int character;
+    int face_option;
     char text[256];
 } Dialogue;
 
