@@ -34,8 +34,6 @@ void choose_scene_init() {
 }
 
 void choose_scene_process(ALLEGRO_EVENT event) {
-
-
     if(event.type == ALLEGRO_EVENT_KEY_CHAR){
         char keycode = event.keyboard.unichar;
         if(keycode >= 32 && keycode <= 126) {
@@ -47,8 +45,6 @@ void choose_scene_process(ALLEGRO_EVENT event) {
         }
     }
     else if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-        
-
         if(event.keyboard.keycode == ALLEGRO_KEY_BACKSPACE) { // handle backspace
             int len = strlen(user_name);
             if(len > 0) { 
@@ -88,10 +84,8 @@ void choose_scene_process(ALLEGRO_EVENT event) {
         }
     }
 
-    if(event.type == ALLEGRO_EVENT_KEY_UP){
-        if(event.keyboard.keycode == ALLEGRO_KEY_ENTER){
-            judge_next_window = true;
-        }
+    if(event.type == ALLEGRO_EVENT_KEY_UP && event.keyboard.keycode == ALLEGRO_KEY_ENTER && choose_gender_circle_fix){
+        judge_next_window = true;
     }
 }
 
