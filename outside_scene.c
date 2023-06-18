@@ -75,17 +75,17 @@ Dialogue outside_scene_dialogue[] = {
     {69, 1, -1, 0, "掰掰～改天見ㄚ owo"},
 };
 
-int outside_scene_dialogue_index =    0;  
-int outside_scene_dialogue_counter =  0;  
+int outside_scene_dialogue_index = 0;  
+int outside_scene_dialogue_counter = 0;  
 int outside_scene_background_option = 1;
 int count_drink_type = 0;
 
 
 void outside_scene_init(){
-    int outside_scene_dialogue_index = 0;  
-    int outside_scene_dialogue_counter =  0;  
-    int outside_scene_background_option = 1;
-    int count_drink_type = 0;
+    outside_scene_dialogue_index = 0;  
+    outside_scene_dialogue_counter = 0;  
+    outside_scene_background_option = 1;
+    count_drink_type = 0;
 
     al_init_image_addon();
     al_init_font_addon();
@@ -223,13 +223,13 @@ void outside_scene_draw(){
     }
 
     if (outside_scene_dialogue_index == 53) {
-        sprintf(outside_scene_dialogue[outside_scene_dialogue_index].text, "咦？哈囉%s，我等等要去看學生的遊戲demo，但我遇到了一題程式問題卡好久，\n好想把它解出來啊....", user_name);
+        sprintf(outside_scene_dialogue[outside_scene_dialogue_index].text, "咦？哈囉%s，我等等要去看學生的遊戲demo，但我遇到了一題程式\n問題卡好久，好想把它解出來啊....", user_name);
     }else if (outside_scene_dialogue_index == 25){
         al_draw_scaled_bitmap(outside_scene_question, 0, 0, al_get_bitmap_width(outside_scene_question), al_get_bitmap_height(outside_scene_question), WIDTH*3/7,  HEIGHT*3/5, WIDTH*4/7, HEIGHT*3.5/5, 0);
     }
 
     Dialogue current_dialog = outside_scene_dialogue[outside_scene_dialogue_index];
-    display_dialog(current_dialog, &outside_scene_dialogue_counter, false);
+    display_dialog(current_dialog, &outside_scene_dialogue_counter, true);
 }
 
 void outside_scene_destroy(){
