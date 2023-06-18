@@ -5,10 +5,9 @@ int menu_button_counter = 0, menu_button_sign = 1;
 double menu_button_size = 1.5;
 bool menu_inside_button = false;
 
-int press_here_counter = 0, start_counter = 0, sakura_image_count = 243, sakura_image_counter = 0;
+int press_here_counter = 0, start_counter = 0;
 ALLEGRO_BITMAP *menu_title_image = 0;
 ALLEGRO_FONT *menu_big_font = NULL, *menu_small_font = NULL;
-ALLEGRO_BITMAP *menu_background = NULL, *menu_sakura_images[243];
 ALLEGRO_SAMPLE *start_sample, *menu_music_sample;
 ALLEGRO_SAMPLE_INSTANCE *start_sample_instance, *menu_music_sample_instance;
 
@@ -22,6 +21,7 @@ void menu_init(){
     bool is_button_hovered = true;
     press_here_counter = 0;
     start_counter = 0;
+    drawSakura = true;
 
     al_init_image_addon();
     al_init_primitives_addon();
@@ -33,34 +33,9 @@ void menu_init(){
     al_set_sample_instance_gain(start_sample_instance, 0.3);
     al_attach_sample_instance_to_mixer(start_sample_instance, al_get_default_mixer());
 
-    menu_music_sample = al_load_sample("./sound/menu_music.wav");
-    menu_music_sample_instance = al_create_sample_instance(menu_music_sample);
-    al_set_sample_instance_playmode(menu_music_sample_instance, ALLEGRO_PLAYMODE_LOOP);
-    al_set_sample_instance_gain(menu_music_sample_instance, 0.3);
-    al_attach_sample_instance_to_mixer(menu_music_sample_instance, al_get_default_mixer());
-    al_play_sample_instance(menu_music_sample_instance);
-
-    ALLEGRO_BITMAP* originalBackground = al_load_bitmap("./image/ini_background.png");
-    menu_background = al_create_bitmap(WIDTH, HEIGHT);
-    al_set_target_bitmap(menu_background);
-    al_draw_scaled_bitmap(originalBackground, 0, 0, al_get_bitmap_width(originalBackground), al_get_bitmap_height(originalBackground), 0, 0, WIDTH, HEIGHT, 0);
-    al_set_target_backbuffer(al_get_current_display());
-    al_destroy_bitmap(originalBackground);
-
     menu_title_image = al_load_bitmap("./image/ttl.png");
     menu_big_font = al_load_ttf_font("./font/pirulen_EN.ttf", HEIGHT/10, 0);
     menu_small_font = al_load_ttf_font("./font/pirulen_EN.ttf", HEIGHT/35, 0);
-
-    for (int i = 0; i < sakura_image_count; i++) {
-        char image_path[100];
-        sprintf(image_path, "./image/sakura/%d.jpg", i);
-        ALLEGRO_BITMAP* originalSakuraImage = al_load_bitmap(image_path);
-        menu_sakura_images[i] = al_create_bitmap(WIDTH, HEIGHT);
-        al_set_target_bitmap(menu_sakura_images[i]);
-        al_draw_scaled_bitmap(originalSakuraImage, 0, 0, al_get_bitmap_width(originalSakuraImage), al_get_bitmap_height(originalSakuraImage), 0, 0, WIDTH, HEIGHT, 0);
-        al_set_target_backbuffer(al_get_current_display());
-        al_destroy_bitmap(originalSakuraImage);
-    }
 }
 
 void menu_process(ALLEGRO_EVENT event) {
@@ -94,11 +69,8 @@ void menu_process(ALLEGRO_EVENT event) {
 }
 
 void menu_draw(){
-    al_draw_bitmap(menu_background, 0, 0, 0);
+    al_draw_bitmap(main_background, 0, 0, 0);
     al_draw_bitmap(menu_title_image, WIDTH/5, HEIGHT/5, 0);
-
-    sakura_image_counter = (sakura_image_counter + 1) % sakura_image_count;
-    al_draw_bitmap(menu_sakura_images[sakura_image_counter], 0, 0, 0);
 
     if (menu_button_counter == 50) {
         menu_button_counter = 0;
@@ -120,13 +92,10 @@ void menu_draw(){
 void menu_destroy(){
     al_destroy_font(menu_big_font);
     al_destroy_font(menu_small_font);
-    al_destroy_bitmap(menu_background);
     al_destroy_bitmap(menu_title_image);
-    for (int i = 0; i < sakura_image_count; i++) {
-        al_destroy_bitmap(menu_sakura_images[i]);
-    }
     al_destroy_sample(start_sample);
     al_destroy_sample_instance(start_sample_instance);
     al_destroy_sample(menu_music_sample);
     al_destroy_sample_instance(menu_music_sample_instance);
+    drawSakura = false;
 }

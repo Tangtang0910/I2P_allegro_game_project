@@ -8,14 +8,14 @@ const char *title = "どきどき戀愛冒險";
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_SAMPLE *song = NULL;
 ALLEGRO_SAMPLE_INSTANCE *sample_instance;
-
-ALLEGRO_BITMAP *return_button_bitmap = NULL;
+ALLEGRO_BITMAP *return_button_bitmap = NULL, *sakura_images[243];
+int sakura_image_count = 243, sakura_image_counter = 0;
 
 int Game_establish() {
     int msg = 0;
 
     game_init();
-    game_begin();
+    menu_init();
     //classroom_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
     while ( msg != GAME_TERMINATE ) {
         msg = game_run();
@@ -54,9 +54,37 @@ void game_init() {
     al_register_event_source(event_queue, al_get_mouse_event_source());
     fps  = al_create_timer( 1.0 / FPS );
     al_register_event_source(event_queue, al_get_timer_event_source( fps )) ;
+    al_reserve_samples(20);
+    al_start_timer(fps);
+
     // initialize the icon on the display
     ALLEGRO_BITMAP *icon = al_load_bitmap("./image/icon.jpg");//程式執行icon
     al_set_display_icon(display, icon);
+
+    song = al_load_sample("./sound/menu_music.wav");
+    sample_instance = al_create_sample_instance(song);
+    al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
+    al_set_sample_instance_gain(sample_instance, 0.3);
+    al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
+    al_play_sample_instance(sample_instance);
+
+    ALLEGRO_BITMAP* originalBackground = al_load_bitmap("./image/ini_background.png");
+    main_background = al_create_bitmap(WIDTH, HEIGHT);
+    al_set_target_bitmap(main_background);
+    al_draw_scaled_bitmap(originalBackground, 0, 0, al_get_bitmap_width(originalBackground), al_get_bitmap_height(originalBackground), 0, 0, WIDTH, HEIGHT, 0);
+    al_set_target_backbuffer(al_get_current_display());
+    al_destroy_bitmap(originalBackground);
+
+    for (int i = 0; i < sakura_image_count; i++) {
+        char image_path[100];
+        sprintf(image_path, "./image/sakura/%d.jpg", i);
+        ALLEGRO_BITMAP* originalSakuraImage = al_load_bitmap(image_path);
+        sakura_images[i] = al_create_bitmap(WIDTH, HEIGHT);
+        al_set_target_bitmap(sakura_images[i]);
+        al_draw_scaled_bitmap(originalSakuraImage, 0, 0, al_get_bitmap_width(originalSakuraImage), al_get_bitmap_height(originalSakuraImage), 0, 0, WIDTH, HEIGHT, 0);
+        al_set_target_backbuffer(al_get_current_display());
+        al_destroy_bitmap(originalSakuraImage);
+    }
 
     main_character_bitmap = al_load_bitmap("image/main_character_boy.png");
     user_name_font = al_load_font("./font/hand_write_CH.ttf", 100, 0);
@@ -78,23 +106,6 @@ void game_init() {
         character_bitmaps[2][i] = al_load_bitmap(image_path);
     } 
     return_button_bitmap = al_load_bitmap("./image/push_button.png");
-}
-
-void game_begin() {
-    // Load sound
-    //song = al_load_sample("./sound/hello.wav");
-    al_reserve_samples(20);
-    sample_instance = al_create_sample_instance(song);
-    // Loop the song until the display closes
-    al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
-    al_restore_default_mixer();
-    al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
-    // set the volume of instance
-    al_set_sample_instance_gain(sample_instance, 1);
-    al_play_sample_instance(sample_instance);
-    al_start_timer(fps);
-    // initialize the menu before entering the loop
-    menu_init();
 }
 
 void game_update(){
@@ -230,6 +241,11 @@ void game_draw(){
         al_draw_scaled_bitmap(return_button_bitmap, 0, 0, al_get_bitmap_width(return_button_bitmap), al_get_bitmap_height(return_button_bitmap), 0, 0, 300, 300, 0);
     }
 
+    if (drawSakura) {
+        sakura_image_counter = (sakura_image_counter + 1) % sakura_image_count;
+        al_draw_bitmap(sakura_images[sakura_image_counter], 0, 0, 0);
+    }
+
     al_flip_display();
 }
 
@@ -249,7 +265,12 @@ void game_destroy() {
     // Make sure you destroy all things
     al_destroy_event_queue(event_queue);
     al_destroy_display(display);
-    
+    al_destroy_sample(song);
+    al_destroy_bitmap(main_background);
+    al_destroy_sample_instance(sample_instance);
+    for (int i = 0; i < sakura_image_count; i++) {
+        al_destroy_bitmap(sakura_images[i]);
+    }
     al_destroy_bitmap(main_character_bitmap);
     al_destroy_font(user_name_font);
     al_destroy_font(dialogue_font);

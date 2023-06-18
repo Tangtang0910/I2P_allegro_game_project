@@ -9,6 +9,7 @@ ALLEGRO_TIMER *fps = NULL;
 bool key_state[ALLEGRO_KEY_MAX] = {false};
 bool judge_next_window = false;
 bool judge_previous_window = false;
+bool drawSakura = false;
 int scene_option = 1; // 有分岔的場景，選擇哪一個
 int end_option = 1; // 哪一個結局
 
@@ -24,7 +25,7 @@ float text_box_height = HEIGHT / 5;     // 文字框的高度
 float text_box_x = WIDTH / 15;           // 文字框的起始 x 座標
 float text_box_y = (float)HEIGHT *((float)8/9) ;      // 文字框的起始 y 座標
 
-ALLEGRO_BITMAP *main_character_bitmap = NULL;
+ALLEGRO_BITMAP *main_character_bitmap = NULL, *main_background = NULL;
 ALLEGRO_BITMAP *character_bitmaps[3][4];
 // first dim
 // 0: classmate, 1: professor, 2: goddes

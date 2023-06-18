@@ -9,7 +9,6 @@
 
 int Game_establish();
 void game_init();
-void game_begin();
 void game_update();
 int process_event();
 void game_draw();

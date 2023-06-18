@@ -19,6 +19,7 @@ extern const int HEIGHT;
 extern bool key_state[ALLEGRO_KEY_MAX];
 extern bool judge_next_window;
 extern bool judge_previous_window;
+extern bool drawSakura;
 extern int scene_option;
 extern int end_option;
 extern ALLEGRO_EVENT_QUEUE *event_queue;
@@ -33,7 +34,7 @@ extern float text_box_height;     // 文字框的高度
 extern float text_box_x;           // 文字框的起始 x 座標
 extern float text_box_y;      // 文字框的起始 y 座標
 
-extern ALLEGRO_BITMAP *main_character_bitmap;
+extern ALLEGRO_BITMAP *main_character_bitmap, *main_background;
 extern ALLEGRO_BITMAP *character_bitmaps[3][4];
 extern int character_face_option; // 角色的表情
 extern ALLEGRO_FONT *user_name_font;
