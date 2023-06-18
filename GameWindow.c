@@ -16,7 +16,7 @@ int Game_establish() {
 
     game_init();
     menu_init();
-    //classroom_end_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
+    //outside_end_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
     while ( msg != GAME_TERMINATE ) {
         msg = game_run();
         if ( msg == GAME_TERMINATE )
@@ -105,6 +105,15 @@ void game_init() {
         sprintf(image_path, "./image/goddes/%d.png", i);
         character_bitmaps[2][i] = al_load_bitmap(image_path);
     } 
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 2; j++) {
+            for (int k = 0; k < 2; k++) {
+                char image_path[100];
+                sprintf(image_path, "./image/end/%d_%d_%d.png", i, j, k);
+                end_bitmaps[i][j][k] = al_load_bitmap(image_path);
+            }
+        }
+    }
     return_button_bitmap = al_load_bitmap("./image/push_button.png");
 }
 
@@ -277,6 +286,13 @@ void game_destroy() {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 4; j++) {
             al_destroy_bitmap(character_bitmaps[i][j]);
+        }
+    }
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 2; j++) {
+            for (int k = 0; k < 2; k++) {
+                al_destroy_bitmap(end_bitmaps[i][j][k]);
+            }
         }
     }
     al_destroy_bitmap(return_button_bitmap);

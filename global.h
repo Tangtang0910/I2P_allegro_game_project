@@ -26,9 +26,6 @@ extern ALLEGRO_EVENT_QUEUE *event_queue;
 extern ALLEGRO_TIMER *fps;
 extern char user_name[100];
 extern int charator_gender;
-extern int goddes_favorability;
-extern int professor_favorability;
-extern int classmate_favorability;
 extern float text_box_width;   // 文字框的寬度
 extern float text_box_height;     // 文字框的高度
 extern float text_box_x;           // 文字框的起始 x 座標
@@ -36,6 +33,7 @@ extern float text_box_y;      // 文字框的起始 y 座標
 
 extern ALLEGRO_BITMAP *main_character_bitmap, *main_background;
 extern ALLEGRO_BITMAP *character_bitmaps[3][4];
+extern ALLEGRO_BITMAP *end_bitmaps[3][2][2];
 extern int character_face_option; // 角色的表情
 extern ALLEGRO_FONT *user_name_font;
 extern ALLEGRO_FONT *dialogue_font;

@@ -23,11 +23,12 @@ float text_box_y = (float)HEIGHT *((float)8/9) ;      // 文字框的起始 y �
 
 ALLEGRO_BITMAP *main_character_bitmap = NULL, *main_background = NULL;
 ALLEGRO_BITMAP *character_bitmaps[3][4];
-// first dim
-// 0: classmate, 1: professor, 2: goddes
-// second dim
-// tang's work
-int character_face_option = 0;
+// first dim, 0: classmate, 1: professor, 2: goddes
+// second dim, different emotions
+ALLEGRO_BITMAP *end_bitmaps[3][2][2];
+// first dim, 0: classmate, 1: professor, 2: goddes
+// second dim, 0: good end, 1: bad end
+// third dim, 0: female, 1: male
 
 ALLEGRO_FONT *user_name_font = NULL;
 ALLEGRO_FONT *dialogue_font = NULL;
