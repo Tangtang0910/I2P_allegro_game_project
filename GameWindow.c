@@ -9,6 +9,8 @@ ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_SAMPLE *song = NULL;
 ALLEGRO_SAMPLE_INSTANCE *sample_instance;
 
+ALLEGRO_BITMAP *return_button_bitmap = NULL;
+
 int Game_establish() {
     int msg = 0;
 
@@ -75,6 +77,7 @@ void game_init() {
         sprintf(image_path, "./image/goddes/%d.png", i);
         character_bitmaps[2][i] = al_load_bitmap(image_path);
     } 
+    return_button_bitmap = al_load_bitmap("./image/push_button.png");
 }
 
 void game_begin() {
@@ -186,6 +189,15 @@ int process_event(){
         outside_end_scene_process(event);
     }
 
+    int mouse_x = event.mouse.x;
+    int mouse_y = event.mouse.y;
+    // whether return button is pushed
+    if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+        if ((mouse_x-150)*(mouse_x-150) + (mouse_y-150)*(mouse_y-150) < 100*100) {
+            judge_previous_window = true;
+        }
+    }
+
     // Shutdown our program
     if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         return GAME_TERMINATE;
@@ -212,6 +224,10 @@ void game_draw(){
         outside_scene_draw();
     } else if (window == 7) {
         outside_end_scene_draw();
+    }
+
+    if (window > 2) {
+        al_draw_scaled_bitmap(return_button_bitmap, 0, 0, al_get_bitmap_width(return_button_bitmap), al_get_bitmap_height(return_button_bitmap), 0, 0, 300, 300, 0);
     }
 
     al_flip_display();
@@ -242,4 +258,5 @@ void game_destroy() {
             al_destroy_bitmap(character_bitmaps[i][j]);
         }
     }
+    al_destroy_bitmap(return_button_bitmap);
 }
