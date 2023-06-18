@@ -192,7 +192,7 @@ int process_event(){
     int mouse_x = event.mouse.x;
     int mouse_y = event.mouse.y;
     // whether return button is pushed
-    if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+    if (window > 2 && event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
         if ((mouse_x-150)*(mouse_x-150) + (mouse_y-150)*(mouse_y-150) < 100*100) {
             judge_previous_window = true;
         }
