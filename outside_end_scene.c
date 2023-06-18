@@ -1,4 +1,4 @@
-#include "bad_end_scene.h"
+#include "outside_end_scene.h"
 
 void bad_end_scene_init(){
 

@@ -4,8 +4,8 @@
 #include "classroom_scene.h"
 #include "campus_scene.h"
 #include "outside_scene.h"
-#include "good_end_scene.h"
-#include "bad_end_scene.h" 
+#include "classroom_end_scene.h"
+#include "outside_end_scene.h" 
 
 int Game_establish();
 void game_init();

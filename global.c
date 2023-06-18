@@ -8,7 +8,7 @@ ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *fps = NULL;
 bool key_state[ALLEGRO_KEY_MAX] = {false};
 bool judge_next_window = false;
-bool isFirstDraw = true ;
+int scene_option = -1; //有分岔的場景，選擇哪一個
 
 char user_name[100] = {0};//使用者名字
 int charator_gender = 2;//使用者性別
