@@ -63,7 +63,12 @@ void game_init() {
     for (int i = 0; i < 3; i++) {
         char image_path[100];
         sprintf(image_path, "./image/classmate/%d.png", i);
-        character_bitmaps[0][i] = al_load_bitmap(image_path);
+        ALLEGRO_BITMAP* originalBitmap = al_load_bitmap(image_path);
+        character_bitmaps[0][i] = al_create_bitmap(WIDTH, HEIGHT);
+        al_set_target_bitmap(character_bitmaps[0][i]);
+        al_draw_scaled_bitmap(originalBitmap, 0, 0, al_get_bitmap_width(originalBitmap), al_get_bitmap_height(originalBitmap), 0, 0, WIDTH, HEIGHT, 0);
+        al_set_target_backbuffer(al_get_current_display());
+        al_destroy_bitmap(originalBitmap);
     }
     for (int i = 0; i < 4; i++) {
         char image_path[100];
