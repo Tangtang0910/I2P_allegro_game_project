@@ -135,7 +135,7 @@ void classroom_scene_draw() {
     }
 
     Dialogue current_dialog = classroom_dialogue[classroom_dialogue_index];
-    display_dialog(current_dialog, &classroom_dialogue_counter);
+    display_dialog(current_dialog, &classroom_dialogue_counter, false);
 }
 
 void classroom_scene_destroy() {

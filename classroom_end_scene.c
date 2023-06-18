@@ -7,7 +7,7 @@ Dialogue classroom_classmate_end_dialogue[] = {
     {3, 1, 0, 1, "不過認真的時候就會像領域展開一樣驚人, \n或是體育課的時候霸氣地說一句「拿去吧!」"},
     {4, 1, 0, 0, "加一個兵長的表情,就把自己喝一半的水讓給女同學(雖然她好像沒喝), \n實際還有很多很多例子"},
     {5, 1, 0, 0, "真的是又體貼又幽默又認真 這些都是我上網看女生會喜歡的條件啊"},
-    {6, 1, 0, 1, "不過 要跟你當朋友以上的關係也不是不可以拉．．．．．．"},
+    {6, 1, 0, 1, "不過... 要跟你當朋友以上的關係也不是不可以拉．．．．．．"},
 };
 int classroom_end_dialogue_index = 0;  
 int classroom_end_dialogue_counter = 0;  
@@ -15,6 +15,7 @@ int classroom_end_dialogue_counter = 0;
 void classroom_end_scene_init() {
     classroom_end_dialogue_index = 0;
     classroom_end_dialogue_counter = 0;
+    drawSakura = true;
 }
 
 void classroom_end_scene_process(ALLEGRO_EVENT event) {
@@ -25,12 +26,12 @@ void classroom_end_scene_process(ALLEGRO_EVENT event) {
 }
 
 void classroom_end_scene_draw() {
-    al_clear_to_color(al_map_rgb(248,163,192));
+    al_draw_bitmap(main_background, 0, 0, 0);
     
     Dialogue current_dialog = classroom_classmate_end_dialogue[classroom_end_dialogue_index];
-    display_dialog(current_dialog, &classroom_end_dialogue_counter);
+    display_dialog(current_dialog, &classroom_end_dialogue_counter, true);
 }
 
 void classroom_end_scene_destroy() {
-
+    drawSakura = false;
 }

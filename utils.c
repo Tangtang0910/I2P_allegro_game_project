@@ -32,7 +32,7 @@ void draw_rounded_rectangle(float x1, float y1, float x2, float y2, float r, ALL
     al_draw_line(x2, y1 + r, x2, y2 - r, color, thickness); // right
 }
 
-void display_dialog(Dialogue dialogue, int *dialogue_counter_ptr) {
+void display_dialog(Dialogue dialogue, int *dialogue_counter_ptr, bool linmiaogian) {
     if (dialogue.character == -1) {
         al_draw_bitmap(main_character_bitmap, 0, 0, 0);
         al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));
@@ -40,7 +40,11 @@ void display_dialog(Dialogue dialogue, int *dialogue_counter_ptr) {
     } else if(dialogue.character == 0){
         al_draw_scaled_bitmap(character_bitmaps[0][dialogue.face_option], 0, 0, al_get_bitmap_width(character_bitmaps[0][dialogue.face_option]), al_get_bitmap_height(character_bitmaps[0][dialogue.face_option]), WIDTH/15, HEIGHT/6, WIDTH/3, HEIGHT/1.9, 0);
         al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));
-        al_draw_text(user_name_font, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, "不知名宅宅");
+        if (linmiaogian) {
+            al_draw_text(user_name_font, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, "凜喵醬");
+        } else {
+            al_draw_text(user_name_font, al_map_rgb(0,0,0), text_box_x*1.5, text_box_y*0.705, ALLEGRO_ALIGN_LEFT, "不知名宅宅");
+        }
     } else if(dialogue.character == 1){
         al_draw_scaled_bitmap(character_bitmaps[1][dialogue.face_option], 0, 0, al_get_bitmap_width(character_bitmaps[1][dialogue.face_option]), al_get_bitmap_height(character_bitmaps[1][dialogue.face_option]), WIDTH/10, HEIGHT/10, WIDTH/4, HEIGHT/1.7, 0);
         al_draw_filled_rectangle(text_box_x, text_box_y*0.8, text_box_x*4, text_box_y*0.7, al_map_rgb(246,165,192));

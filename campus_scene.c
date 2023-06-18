@@ -115,7 +115,11 @@ void campus_scene_draw(){
     }
 
     Dialogue current_dialog = campus_dialogue[campus_dialogue_index];
-    display_dialog(current_dialog, &campus_dialogue_counter);
+    if (campus_dialogue_index < 23) {
+        display_dialog(current_dialog, &campus_dialogue_counter, false);
+    } else {
+        display_dialog(current_dialog, &campus_dialogue_counter, true);
+    }
 }
 
 void campus_scene_destroy(){
