@@ -74,7 +74,7 @@ void classroom_scene_process(ALLEGRO_EVENT event) {
     if (classroom_dialogue_index == 6 && event.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (event.keyboard.keycode == ALLEGRO_KEY_1) {
             scene_option = 2;
-            end_option = 1;
+            end_option = 0;
             judge_next_window = true;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2) {
             classroom_dialogue_index++;
@@ -119,7 +119,7 @@ void classroom_scene_process(ALLEGRO_EVENT event) {
     } else if (classroom_dialogue_index == 22 && event.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (event.keyboard.keycode == ALLEGRO_KEY_1) {
             scene_option = 2;
-            end_option = 2;
+            end_option = 1;
             judge_next_window = true;
         } else if (event.keyboard.keycode == ALLEGRO_KEY_2) {
             classroom_dialogue_index++;

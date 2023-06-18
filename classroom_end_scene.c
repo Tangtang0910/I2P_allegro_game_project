@@ -9,13 +9,22 @@ Dialogue classroom_classmate_end_dialogue[] = {
     {5, 1, 0, 0, "真的是又體貼又幽默又認真 這些都是我上網看女生會喜歡的條件啊"},
     {6, 1, 0, 1, "不過... 要跟你當朋友以上的關係也不是不可以拉．．．．．．"},
 };
+Dialogue classroom_goddess_end_dialogue[] = {
+    {0, 1, 3, 0, "你讀...你居然讀交大嗎"},
+    {1, 1, 3, 0, "那是哪一間啊，是在陽明山下那一間嗎，\n還是紐約市大學(NYC University)啊"},
+    {2, 1, 3, 0, "我好像有朋友學測少考一科才會到那邊去，\n他現在已經在準備明年重考了"},
+    {3, 1, 3, 0, "我沒辦法跟這種學店的人當朋友，\n拜託你今天當作沒有碰到我"},
+};
 int classroom_end_dialogue_index = 0;  
 int classroom_end_dialogue_counter = 0;  
 
 void classroom_end_scene_init() {
     classroom_end_dialogue_index = 0;
     classroom_end_dialogue_counter = 0;
-    drawSakura = true;
+
+    if (end_option == 0) {
+        drawSakura = true;
+    }
 }
 
 void classroom_end_scene_process(ALLEGRO_EVENT event) {
@@ -25,11 +34,22 @@ void classroom_end_scene_process(ALLEGRO_EVENT event) {
     }
 }
 
-void classroom_end_scene_draw() {
-    al_draw_bitmap(main_background, 0, 0, 0);
-    
-    Dialogue current_dialog = classroom_classmate_end_dialogue[classroom_end_dialogue_index];
-    display_dialog(current_dialog, &classroom_end_dialogue_counter, true);
+void classroom_end_scene_draw() {    
+    if (end_option == 0) {
+        if (classroom_end_dialogue_index <= 6) {
+            al_draw_bitmap(main_background, 0, 0, 0);
+            Dialogue current_dialog = classroom_classmate_end_dialogue[classroom_end_dialogue_index];
+            display_dialog(current_dialog, &classroom_end_dialogue_counter, true);
+        } else {
+            al_draw_scaled_bitmap(end_bitmaps[0][0][1], 0, 0, al_get_bitmap_width(end_bitmaps[0][0][1]), al_get_bitmap_height(end_bitmaps[0][0][1]), 0, 0, WIDTH, HEIGHT, 0);
+        }
+    } else if (end_option == 1) {
+        al_draw_scaled_bitmap(end_bitmaps[2][1][0], 0, 0, al_get_bitmap_width(end_bitmaps[2][1][0]), al_get_bitmap_height(end_bitmaps[2][1][0]), 0, 0, WIDTH, HEIGHT, 0);
+        if (classroom_end_dialogue_index < 4) {
+            Dialogue current_dialog = classroom_goddess_end_dialogue[classroom_end_dialogue_index];
+            display_dialog(current_dialog, &classroom_end_dialogue_counter, true);
+        }
+    }
 }
 
 void classroom_end_scene_destroy() {

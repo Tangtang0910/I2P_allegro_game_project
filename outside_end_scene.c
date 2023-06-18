@@ -24,6 +24,8 @@ int outside_end_dialogue_index = 0;
 int outside_end_dialogue_counter = 0;
 
 void outside_end_scene_init(){
+    outside_end_dialogue_index = 0;
+    outside_end_dialogue_counter = 0;
     drawSakura = true;
 }
 
