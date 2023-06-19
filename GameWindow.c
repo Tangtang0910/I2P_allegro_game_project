@@ -1,7 +1,7 @@
 #include "GameWindow.h"
 
 bool draw = false;
-int window = 6; // 第幾個畫面
+int window = 1; // 第幾個畫面
 const char *title = "どきどき戀愛冒險";
 
 // ALLEGRO Variables
@@ -16,7 +16,7 @@ int Game_establish() {
 
     game_init();
     menu_init();
-    outside_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
+    //outside_scene_init();//最後會刪掉, 更改第幾個畫面的時候要更新
     while ( msg != GAME_TERMINATE ) {
         msg = game_run();
         if ( msg == GAME_TERMINATE )
