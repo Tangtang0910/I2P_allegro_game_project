@@ -1,6 +1,6 @@
 #include "outside_scene.h"
 
-ALLEGRO_BITMAP *outside_scene_cafe_background = NULL, *outside_scene_street_background = NULL, *outside_scene_question = NULL;
+ALLEGRO_BITMAP *outside_scene_cafe_background = NULL, *outside_scene_street_background = NULL, *outside_scene_question = NULL, *outside_scene_question_2 = NULL;
 
 Dialogue outside_scene_dialogue[] = {
     {0, 1, 3, 0, "（校外咖啡廳）"},
@@ -28,7 +28,7 @@ Dialogue outside_scene_dialogue[] = {
     {22, 1, -1, 0,"(賺爛了賺爛了，可以快樂解題目又能坐女神對面 55555555)"},
     {23, 1, -1, 0,"(這次要好好表現！！)"},
     {24, 1, -1, 0,"(OJ 啟動!!)"},
-    {25, 2, -1, 0,"1)gf_opinion\n2)my_opinion\n3)他沒寫分號QQ"},
+    {25, 2, 3, 0,"1)gf_opinion\n2)my_opinion\n3)他沒寫分號QQ"},
     {26, 1, 3,  0,"答對！"},
     {27, 1, 3,  0,"答錯！"},
     {28, 1, 2,  1,"抱歉我想到我還有點事情，之後我再去看結果，今天謝謝你了。"},
@@ -93,6 +93,7 @@ void outside_scene_init(){
     outside_scene_cafe_background = al_load_bitmap("./image/outside_bk_cafe.jpeg");
     outside_scene_street_background = al_load_bitmap("./image/outside_bk_street.jpeg");
     outside_scene_question = al_load_bitmap("./image/outside_question.png");
+    outside_scene_question_2 = al_load_bitmap("./image/outside_question_2.png"); //change
 }
 
 void outside_scene_process(ALLEGRO_EVENT event){
@@ -235,10 +236,12 @@ void outside_scene_draw(){
         al_draw_scaled_bitmap(outside_scene_street_background, 0, 0, al_get_bitmap_width(outside_scene_street_background), al_get_bitmap_height(outside_scene_street_background), 0, 0, WIDTH, HEIGHT, 0);
     }
 
-    if (outside_scene_dialogue_index == 53) {
+    if (outside_scene_dialogue_index == 53){
         sprintf(outside_scene_dialogue[outside_scene_dialogue_index].text, "咦？哈囉%s，我等等要去看學生的遊戲demo，但我遇到了一題程式\n問題卡好久，好想把它解出來啊....", user_name);
     }else if (outside_scene_dialogue_index == 25){
-        al_draw_scaled_bitmap(outside_scene_question, 0, 0, al_get_bitmap_width(outside_scene_question), al_get_bitmap_height(outside_scene_question), WIDTH*3/7,  HEIGHT*3/5, WIDTH*4/7, HEIGHT*3.5/5, 0);
+        al_draw_scaled_bitmap(outside_scene_question, 0, 0, al_get_bitmap_width(outside_scene_question), al_get_bitmap_height(outside_scene_question),  WIDTH*1/7,  HEIGHT*1/5, WIDTH*5/7, HEIGHT*2/5, 0);
+    }else if (outside_scene_dialogue_index == 56){
+        al_draw_scaled_bitmap(outside_scene_question_2, 0, 0, al_get_bitmap_width(outside_scene_question_2), al_get_bitmap_height(outside_scene_question_2), WIDTH*1/7,  HEIGHT*1/5, WIDTH*5/7, HEIGHT*2/5, 0);
     }
 
     Dialogue current_dialog = outside_scene_dialogue[outside_scene_dialogue_index];
@@ -249,4 +252,5 @@ void outside_scene_destroy(){
     al_destroy_bitmap(outside_scene_cafe_background);
     al_destroy_bitmap(outside_scene_street_background);
     al_destroy_bitmap(outside_scene_question);
+    al_destroy_bitmap(outside_scene_question_2);
 }

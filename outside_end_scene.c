@@ -1,5 +1,8 @@
 #include "outside_end_scene.h"
 
+int end_time_counter = 0;
+ALLEGRO_FONT *end_font = NULL;
+
 Dialogue classmate_end_dialogue[] = {
     {0, 1, 0, 0, "umm... 說真的,我的條件真的主角/男神等級的除了胖了一點外(100多不便\n透露),其他各方面都遠超其他人"},
     {1, 1, 0, 0, "不如這樣說吧,我比較偏向利維兵長那種冷酷壞帥的類型,\n身高也跟他差不多,\n我看女生都很喜歡這種類型的不是嗎?"},
@@ -30,8 +33,11 @@ int outside_end_dialogue_counter = 0;
 int ending_character = 0, ending_flag = 0;
 
 void outside_end_scene_init(){
+    end_time_counter = 0;
     outside_end_dialogue_index = 0;
     outside_end_dialogue_counter = 0;
+
+    end_font = al_load_font("./font/hand_write_CH.ttf", 200, 0);
     
     if (end_option == 0) {
         ending_character = 1;
@@ -73,39 +79,47 @@ void outside_end_scene_process(ALLEGRO_EVENT event){
 }
 
 void outside_end_scene_draw(){
-    if (ending_character == 0) {
-        if (outside_end_dialogue_index <= 6) {
-            al_draw_bitmap(main_background, 0, 0, 0);
-            Dialogue current_dialog = classmate_end_dialogue[outside_end_dialogue_index];
-            display_dialog(current_dialog, &outside_end_dialogue_counter, true);
-        } else {
-            al_draw_scaled_bitmap(end_bitmaps[0][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[0][0][charator_gender]), al_get_bitmap_height(end_bitmaps[0][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
-        }
-    } else if (ending_character == 1) {
-        if (outside_end_dialogue_index <= 3) {
-            al_draw_bitmap(main_background, 0, 0, 0);
-            Dialogue current_dialog = professor_end_dialogue[outside_end_dialogue_index];
-            display_dialog(current_dialog, &outside_end_dialogue_counter, true);
-        } else {
-            al_draw_scaled_bitmap(end_bitmaps[1][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[1][0][charator_gender]), al_get_bitmap_height(end_bitmaps[1][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
-        }
-    } else if (ending_character == 2 && ending_flag == 0) {
-        if (outside_end_dialogue_index <= 2) {
-            al_draw_bitmap(main_background, 0, 0, 0);
-            Dialogue current_dialog = goddess_end_dialogue[outside_end_dialogue_index];
-            display_dialog(current_dialog, &outside_end_dialogue_counter, true);
-        } else {
-            al_draw_scaled_bitmap(end_bitmaps[2][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[2][0][charator_gender]), al_get_bitmap_height(end_bitmaps[2][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
-        }
-    } else if (ending_character == 2 && ending_flag == 1) {
-        al_draw_scaled_bitmap(end_bitmaps[2][1][0], 0, 0, al_get_bitmap_width(end_bitmaps[2][1][0]), al_get_bitmap_height(end_bitmaps[2][1][0]), 0, 0, WIDTH, HEIGHT, 0);
-        if (outside_end_dialogue_index <= 2) {
-            Dialogue current_dialog = goddess_bad_end_dialogue[outside_end_dialogue_index];
-            display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+    end_time_counter++;
+    if(end_time_counter / FPS <= 4){
+        al_clear_to_color(al_map_rgb(248,163,192));
+        al_draw_text(end_font, al_map_rgb(0,0,0), WIDTH*1.35/3, HEIGHT*5/6, ALLEGRO_ALIGN_LEFT, "戀愛度計算中...");
+    }
+    else{
+        if (ending_character == 0) {
+            if (outside_end_dialogue_index <= 6) {
+                al_draw_bitmap(main_background, 0, 0, 0);
+                Dialogue current_dialog = classmate_end_dialogue[outside_end_dialogue_index];
+                display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+            } else {
+                al_draw_scaled_bitmap(end_bitmaps[0][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[0][0][charator_gender]), al_get_bitmap_height(end_bitmaps[0][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
+            }
+        } else if (ending_character == 1) {
+            if (outside_end_dialogue_index <= 3) {
+                al_draw_bitmap(main_background, 0, 0, 0);
+                Dialogue current_dialog = professor_end_dialogue[outside_end_dialogue_index];
+                display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+            } else {
+                al_draw_scaled_bitmap(end_bitmaps[1][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[1][0][charator_gender]), al_get_bitmap_height(end_bitmaps[1][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
+            }
+        } else if (ending_character == 2 && ending_flag == 0) {
+            if (outside_end_dialogue_index <= 2) {
+                al_draw_bitmap(main_background, 0, 0, 0);
+                Dialogue current_dialog = goddess_end_dialogue[outside_end_dialogue_index];
+                display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+            } else {
+                al_draw_scaled_bitmap(end_bitmaps[2][0][charator_gender], 0, 0, al_get_bitmap_width(end_bitmaps[2][0][charator_gender]), al_get_bitmap_height(end_bitmaps[2][0][charator_gender]), 0, 0, WIDTH, HEIGHT, 0);
+            }
+        } else if (ending_character == 2 && ending_flag == 1) {
+            al_draw_scaled_bitmap(end_bitmaps[2][1][0], 0, 0, al_get_bitmap_width(end_bitmaps[2][1][0]), al_get_bitmap_height(end_bitmaps[2][1][0]), 0, 0, WIDTH, HEIGHT, 0);
+            if (outside_end_dialogue_index <= 2) {
+                Dialogue current_dialog = goddess_bad_end_dialogue[outside_end_dialogue_index];
+                display_dialog(current_dialog, &outside_end_dialogue_counter, true);
+            }
         }
     }
 }
 
 void outside_end_scene_destroy(){
     drawSakura = false;
+    al_destroy_font(end_font);
 }
